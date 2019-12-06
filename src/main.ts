@@ -18,12 +18,7 @@ let parameterArea: p5.Element;
 const completeGenerate = (parameters: Parameters.Unit) => (
   imgList: readonly p5.Element[]
 ) => {
-  const grid = ImageGrid.create({
-    images: imgList,
-    rows: parameters.rows,
-    columns: parameters.columns,
-    wholeSize: parameters
-  });
+  const grid = ImageGrid.create(imgList, parameters);
 
   const scaleFactor = Math.min(
     1,
