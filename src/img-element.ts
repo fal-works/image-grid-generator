@@ -13,6 +13,7 @@ export const create = (parameters: {
     file: { data: url },
     alt
   } = parameters;
+
   const img = p.createImg(url, alt, () => {
     const { file, warnOnFail, hide, onLoad, onFail } = parameters;
 
@@ -25,4 +26,6 @@ export const create = (parameters: {
     if (hide) img.hide();
     if (onLoad) onLoad(img);
   });
+
+  return img;
 };
