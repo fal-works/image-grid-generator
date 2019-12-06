@@ -4,7 +4,7 @@ import * as DropZone from "./drop-zone";
 import * as Button from "./button";
 import * as ImgElement from "./img-element";
 import { CANVAS_SIZE } from "./settings";
-import * as Thumbnail from "./thumbnail";
+import * as ThumbnailArea from "./thumbnail-area";
 import * as ImageGrid from "./image-grid";
 
 const imageFiles: p5.File[] = [];
@@ -48,12 +48,25 @@ const saveResult = () => {
   p.save(gridImage, `grid-image.png`);
 };
 
+const setupDropZone = () => {
+  const thumbnails = ThumbnailArea.create({
+    position: { x: 0, y: 30 },
+    width: p.width,
+    columns: 8
+  });
+
+  const onAddThumbnail = (_: p5.Element, file: p5.File) =>
+    imageFiles.push(file);
+  const onDropFile = (file: p5.File) =>
+    ThumbnailArea.add(thumbnails, file, onAddThumbnail);
+
+  DropZone.create(onDropFile);
+};
+
 const setup = () => {
   p.createCanvas(CANVAS_SIZE.width, CANVAS_SIZE.height);
 
-  const onDropFile = (file: p5.File) =>
-    Thumbnail.add(file, (_, file) => imageFiles.push(file));
-  DropZone.create(onDropFile);
+  setupDropZone();
 
   Button.create({
     label: "generate",
