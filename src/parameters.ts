@@ -26,17 +26,21 @@ export const defaultValues: Unit = {
   innerMargin: 0
 };
 
-export const defaultString = JSON.stringify(defaultValues, undefined, 2);
+export const stringify = (parameters: Unit) =>
+  JSON.stringify(parameters, undefined, 2);
+
+export const defaultString = stringify(defaultValues);
 
 const reviver = (key: string, value: any) =>
   key === "" ||
+  Number.isFinite(value) ||
   (typeof value === "object" && !Array.isArray(value)) ||
-  Number.isFinite(value)
+  typeof value === "string"
     ? value
     : undefined;
 
 const validateNumber = (value: any, defaultValue: number) =>
-  Number.isFinite(value) ? value : defaultValue;
+  Number.isFinite(value) && value < 10000 ? value : defaultValue;
 
 export const parse = (jsonString: string): Unit => {
   const parsed = JSON.parse(jsonString, reviver);
