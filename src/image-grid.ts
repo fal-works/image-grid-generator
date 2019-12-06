@@ -6,14 +6,23 @@ export const create = (
   images: readonly p5.Image[] | readonly p5.Element[],
   parameters: Parameters.Unit
 ) => {
-  const { width, height, rows, columns, outerMargin } = parameters;
+  const {
+    width: graphicsWidth,
+    height: graphicsHeight,
+    rows,
+    columns,
+    outerMargin
+  } = parameters;
   const imageCount = images.length;
 
-  const cellWidth = (width - outerMargin.left - outerMargin.right) / columns;
-  const cellHeight = (height - outerMargin.top - outerMargin.bottom) / rows;
+  const cellWidth =
+    (graphicsWidth - outerMargin.left - outerMargin.right) / columns;
+  const cellHeight =
+    (graphicsHeight - outerMargin.top - outerMargin.bottom) / rows;
+
   let imageIndex = 0;
 
-  const graphics = p.createGraphics(width, height);
+  const graphics = p.createGraphics(graphicsWidth, graphicsHeight);
   graphics.push();
   graphics.imageMode(p.CENTER);
   graphics.translate(
@@ -29,7 +38,19 @@ export const create = (
       const x = column * cellWidth;
 
       const image = images[imageIndex++];
-      graphics.image(image, x, y, cellWidth, cellHeight);
+      const imageWidth = (image as any).width as number;
+      const imageHeight = (image as any).height as number;
+      const scaleFactor = Math.min(
+        cellWidth / imageWidth,
+        cellHeight / imageHeight
+      );
+      graphics.image(
+        image,
+        x,
+        y,
+        scaleFactor * imageWidth,
+        scaleFactor * imageHeight
+      );
     }
   }
 
