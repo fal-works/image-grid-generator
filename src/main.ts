@@ -4,7 +4,12 @@ import * as DropZone from "./dom/drop-zone";
 import * as Button from "./dom/button";
 import * as ImgElement from "./dom/img-element";
 import * as TextArea from "./dom/text-area";
-import { canvasSize, dropZoneSize, canvasPosition } from "./settings";
+import {
+  canvasPosition,
+  canvasSize,
+  dropZonePosition,
+  dropZoneSize
+} from "./settings";
 import * as ThumbnailArea from "./thumbnail-area";
 import * as ImageGrid from "./image-grid";
 
@@ -62,7 +67,7 @@ const saveResult = () => {
 
 const setupDropZone = () => {
   const thumbnails = ThumbnailArea.create({
-    position: { x: 0, y: 0 },
+    position: dropZonePosition,
     size: dropZoneSize,
     initialColumns: 8
   });
@@ -73,7 +78,7 @@ const setupDropZone = () => {
     ThumbnailArea.add(thumbnails, file, onAddThumbnail);
 
   DropZone.create({
-    position: { x: 0, y: 0 },
+    position: dropZonePosition,
     size: dropZoneSize,
     onDrop
   });
