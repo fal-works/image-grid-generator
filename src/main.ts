@@ -1,8 +1,8 @@
 import p5 from "p5";
 import { p, setP5Instance } from "./shared";
 import * as DropZone from "./drop-zone";
-import * as Button from "./button";
-import * as ImgElement from "./img-element";
+import * as Button from "./dom/button";
+import * as ImgElement from "./dom/img-element";
 import { CANVAS_SIZE } from "./settings";
 import * as ThumbnailArea from "./thumbnail-area";
 import * as ImageGrid from "./image-grid";

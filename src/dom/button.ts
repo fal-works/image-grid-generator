@@ -1,4 +1,4 @@
-import { p } from "./shared";
+import { p } from "../shared";
 
 export const create = (parameters: {
   label: string;
