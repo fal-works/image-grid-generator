@@ -15,11 +15,12 @@ export const draw = (parameters: Parameters.Unit) => {
     }
   } = parameters;
 
-  const contentWidth = width - leftMargin - rightMargin;
-  const contentHeight = height - topMargin - bottomMargin;
-
-  const columnWidth = contentWidth / columns;
-  const rowHeight = contentHeight / rows;
+  const {
+    contentWidth,
+    contentHeight,
+    columnWidth,
+    rowHeight
+  } = Parameters.calculate(parameters);
 
   p.push();
   p.stroke(255, 64, 128);

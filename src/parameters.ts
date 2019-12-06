@@ -9,6 +9,7 @@ export type Unit = {
     readonly left: number;
     readonly right: number;
   };
+  readonly innerMargin: number;
 };
 
 export const defaultValues: Unit = {
@@ -21,7 +22,8 @@ export const defaultValues: Unit = {
     bottom: 0,
     left: 0,
     right: 0
-  }
+  },
+  innerMargin: 0
 };
 
 export const defaultString = JSON.stringify(defaultValues, undefined, 2);
@@ -53,5 +55,21 @@ export const parse = (jsonString: string): Unit => {
     right: validateNumber(parsedOuterMargin.right, defaultOuterMargin.right)
   };
 
-  return { width, height, columns, rows, outerMargin };
+  const innerMargin = validateNumber(
+    parsed.innerMargin,
+    defaultValues.innerMargin
+  );
+
+  return { width, height, columns, rows, outerMargin, innerMargin };
+};
+
+export const calculate = (parameters: Unit) => {
+  const { columns, rows, outerMargin } = parameters;
+  const contentWidth = parameters.width - outerMargin.left - outerMargin.right;
+  const contentHeight =
+    parameters.height - outerMargin.top - outerMargin.bottom;
+  const columnWidth = contentWidth / columns;
+  const rowHeight = contentHeight / rows;
+
+  return { contentWidth, contentHeight, columnWidth, rowHeight };
 };
