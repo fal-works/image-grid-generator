@@ -20,6 +20,12 @@ let parameterArea: p5.Element;
 let guideMode = false;
 let drawGeneratedGrid = () => {
   p.background(255);
+  p.push();
+  p.stroke(224);
+  p.noFill();
+  p.strokeWeight(1);
+  p.rect(1, 1, p.width - 2, p.height - 2);
+  p.pop();
 };
 
 // ---- functions -------------------------------------------------------------
@@ -130,7 +136,7 @@ const setupParameterArea = () => {
     if (currentValue === parameterAreaValue) return;
 
     drawGeneratedGrid();
-    Guide.draw(Parameters.parse(parameterArea.value().toString()));
+    Guide.draw(Parameters.parse(currentValue));
 
     parameterAreaValue = currentValue;
   }, 100);
