@@ -10,6 +10,7 @@ export type Unit = {
     readonly right: number;
   };
   readonly innerMargin: number;
+  readonly backgroundColorCode: string;
 };
 
 export const defaultValues: Unit = {
@@ -23,7 +24,8 @@ export const defaultValues: Unit = {
     left: 0,
     right: 0
   },
-  innerMargin: 0
+  innerMargin: 0,
+  backgroundColorCode: "#FFFFFF00"
 };
 
 export const stringify = (parameters: Unit) =>
@@ -41,6 +43,9 @@ const reviver = (key: string, value: any) =>
 
 const validateNumber = (value: any, defaultValue: number) =>
   Number.isFinite(value) && value < 10000 ? value : defaultValue;
+
+const validateString = (value: any, defaultValue: string) =>
+  typeof value === "string" ? value : defaultValue;
 
 export const parse = (jsonString: string): Unit => {
   const parsed = JSON.parse(jsonString, reviver);
@@ -64,7 +69,20 @@ export const parse = (jsonString: string): Unit => {
     defaultValues.innerMargin
   );
 
-  return { width, height, columns, rows, outerMargin, innerMargin };
+  const backgroundColorCode = validateString(
+    parsed.backgroundColorCode,
+    defaultValues.backgroundColorCode
+  );
+
+  return {
+    width,
+    height,
+    columns,
+    rows,
+    outerMargin,
+    innerMargin,
+    backgroundColorCode
+  };
 };
 
 export const calculate = (parameters: Unit) => {

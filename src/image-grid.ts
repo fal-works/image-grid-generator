@@ -12,13 +12,17 @@ export const create = (
     rows,
     columns,
     outerMargin,
-    innerMargin
+    innerMargin,
+    backgroundColorCode
   } = parameters;
   const imageCount = images.length;
 
   const { cellWidth, cellHeight } = Parameters.calculate(parameters);
 
   const graphics = p.createGraphics(graphicsWidth, graphicsHeight);
+  const backgroundColor = p.color(backgroundColorCode);
+  if (p.alpha(backgroundColor) > 0) graphics.background(backgroundColor);
+
   graphics.push();
   graphics.imageMode(p.CENTER);
   graphics.translate(
