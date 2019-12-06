@@ -13,7 +13,7 @@
   },
   "overrides": [
     {
-      "files": ["dist/*.js"],
+      "files": ["build/*.js"],
       "globals": {
         "p5": "readonly"
       },

@@ -24,17 +24,13 @@
   "eslintIgnore": [
     "*.min.js"
   ],
-  "files": [
-    "dist"
-  ],
   "license": "MIT",
-  "main": "dist/main.js",
   "private": true,
   "scripts": {
     "build": "run-s rollup format minify",
-    "format": "eslint --fix ./dist/main.js",
+    "format": "eslint --fix ./build/main.js",
     "lint": "eslint --fix ./src/**/*.ts",
-    "minify": "terser ./dist/main.js -c -m -o ./dist/main.min.js --comments /@copyright/ --ecma 6",
+    "minify": "terser ./build/main.js -c -m -o ./docs/main.min.js --comments /@copyright/ --ecma 6",
     "rollup": "rollup -c"
   }
 }

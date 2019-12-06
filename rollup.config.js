@@ -36,7 +36,7 @@ const plugins = [typescriptPlugin, cleanupPlugin];
 const config = {
   input: "src/main.ts",
   output: {
-    file: "dist/main.js",
+    file: "build/main.js",
     format: "iife",
     sourcemap: true,
     banner: bannerComment,
