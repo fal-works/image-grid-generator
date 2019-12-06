@@ -17,7 +17,7 @@ export const leftZoneSize: RectangleSize = {
 
 const leftZoneRightPadding = 20;
 
-const leftZoneInterval = 10;
+const leftZoneInterval = 30;
 
 // -- drop zone ----
 
@@ -50,8 +50,8 @@ export const generateButtonPosition: Position = {
   y: dropZonePosition.y + dropZoneSize.height + leftZoneInterval
 };
 
-const buttonHeight = 30;
-const buttonHorizontalInterval = 10;
+const buttonHeight = 40;
+const buttonHorizontalInterval = 16;
 
 export const generateButtonSize: RectangleSize = {
   width: 120,
@@ -67,7 +67,7 @@ export const saveButtonPosition: Position = {
 };
 
 export const saveButtonSize: RectangleSize = {
-  width: 80,
+  width: 120,
   height: buttonHeight
 };
 

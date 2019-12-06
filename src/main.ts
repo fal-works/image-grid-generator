@@ -96,14 +96,14 @@ const setupButtons = () => {
     onClick: startGenerate,
     position: Settings.generateButtonPosition,
     size: Settings.generateButtonSize
-  });
+  }).style("font-size", "large");
 
   Button.create({
     label: "save",
     onClick: saveResult,
     position: Settings.saveButtonPosition,
     size: Settings.saveButtonSize
-  });
+  }).style("font-size", "large");
 };
 
 const setupParameterArea = () => {
