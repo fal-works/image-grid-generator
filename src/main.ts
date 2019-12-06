@@ -102,8 +102,8 @@ const setupButtons = () => {
 
 const setupParameterArea = () => {
   parameterArea = TextArea.create({
-    position: Settings.textAreaPosition,
-    size: Settings.textAreaSize,
+    position: Settings.parameterAreaPosition,
+    size: Settings.parameterAreaSize,
     initialValue: Parameters.defaultString
   });
 

@@ -19,6 +19,8 @@ const leftZoneRightPadding = 20;
 
 const leftZoneInterval = 10;
 
+// -- drop zone ----
+
 export const dropZonePosition: Position = {
   x: leftZonePosition.x,
   y: leftZonePosition.y
@@ -28,6 +30,8 @@ export const dropZoneSize: RectangleSize = {
   width: leftZoneSize.width - leftZoneRightPadding,
   height: 420
 };
+
+// -- buttons ----
 
 export const generateButtonPosition: Position = {
   x: leftZonePosition.x,
@@ -55,17 +59,21 @@ export const saveButtonSize: RectangleSize = {
   height: buttonHeight
 };
 
-export const textAreaPosition: Position = {
+// -- parameter area ----
+
+export const parameterAreaPosition: Position = {
   x: leftZonePosition.x,
   y: generateButtonPosition.y + buttonHeight + leftZoneInterval
 };
 
-export const textAreaSize: RectangleSize = {
+export const parameterAreaSize: RectangleSize = {
   width: leftZoneSize.width - leftZoneRightPadding,
   height:
     leftZoneSize.height -
     (dropZoneSize.height + leftZoneInterval + buttonHeight + leftZoneInterval)
 };
+
+// -- canvas ----
 
 export const canvasSize: RectangleSize = {
   width: wholeSize.width - leftZoneSize.width,
