@@ -17,7 +17,7 @@ export const leftZoneSize: RectangleSize = {
 
 const leftZoneRightPadding = 20;
 
-const leftZoneInterval = 30;
+const leftZoneInterval = 20;
 
 // -- drop zone ----
 
