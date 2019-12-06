@@ -111,7 +111,8 @@ const setupParameterArea = () => {
   parameterArea = TextArea.create({
     position: Settings.parameterAreaPosition,
     size: Settings.parameterAreaSize,
-    initialValue: Parameters.defaultString
+    initialValue: Parameters.defaultString,
+    fontFamily: "Overpass Mono"
   });
 
   parameterArea.elt.addEventListener("mouseenter", () => {
