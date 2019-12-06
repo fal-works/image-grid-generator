@@ -5,6 +5,7 @@ import * as Button from "./button";
 import * as ImgElement from "./img-element";
 import { CANVAS_SIZE } from "./settings";
 import * as Thumbnail from "./thumbnail";
+import * as ImageGrid from "./image-grid";
 
 const imageFiles: p5.File[] = [];
 
@@ -26,12 +27,8 @@ const addImage = (file: p5.File) => {
 const generate = () => {
   p.background(255);
 
-  const g = p.createGraphics(960, 960);
   const rows = 3;
   const columns = 3;
-
-  const cellWidth = g.width / columns;
-  const cellHeight = g.height / rows;
 
   const files: p5.File[] = p.shuffle(imageFiles).slice(0, rows * columns);
   ImgElement.createList({
@@ -39,19 +36,16 @@ const generate = () => {
     hide: true,
     warnOnFail: true,
     onComplete: imgList => {
-      for (let row = 0; row < rows; row += 1) {
-        const y = row * cellHeight;
-        for (let column = 0; column < columns; column += 1) {
-          const x = column * cellWidth;
-          const image = imgList.pop();
-          if (!image) break;
-          g.image(image, x, y, cellWidth, cellHeight);
-        }
-      }
+      const grid = ImageGrid.create({
+        images: imgList,
+        rows,
+        columns,
+        wholeSize: { width: 960, height: 960 }
+      });
 
-      p.image(g, p.width / 2 - 480 / 2, p.height / 2, 480, 480);
+      p.image(grid, p.width / 2 - 480 / 2, p.height / 2, 480, 480);
 
-      gridImage = g;
+      gridImage = grid;
     }
   });
 };
