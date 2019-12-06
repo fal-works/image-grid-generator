@@ -19,7 +19,7 @@ let gridImage: p5.Graphics | undefined = undefined;
 let parameterArea: p5.Element;
 let guideMode = false;
 let drawGeneratedGrid = () => {
-  return;
+  p.background(255);
 };
 
 // ---- functions -------------------------------------------------------------

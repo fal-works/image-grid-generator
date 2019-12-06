@@ -16,6 +16,7 @@ export const draw = (parameters: Parameters.Unit) => {
   } = Parameters.calculate(parameters);
 
   p.push();
+  p.translate((p.width - width) / 2, (p.height - height) / 2);
   p.stroke(255, 64, 128);
   p.noFill();
 
