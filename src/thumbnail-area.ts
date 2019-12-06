@@ -58,6 +58,7 @@ export const changeColumns = (area: Unit, columns: number) => {
 const onLoad = (area: Unit, thumbnail: p5.Element) => {
   const { position, size, cellSize, columns, elements } = area;
 
+  thumbnail.show();
   setElement(thumbnail, elements.length, position, columns, cellSize);
 
   area.elements.push(thumbnail);
@@ -84,5 +85,5 @@ export const add = (
       onLoad(area, img);
       onComplete(img, file);
     }
-  });
+  }).hide();
 };
