@@ -1,6 +1,6 @@
 import p5 from "p5";
 import { p, setP5Instance } from "./shared";
-import * as DropZone from "./drop-zone";
+import * as DropZone from "./dom/drop-zone";
 import * as Button from "./dom/button";
 import * as ImgElement from "./dom/img-element";
 import { CANVAS_SIZE } from "./settings";

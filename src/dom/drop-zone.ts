@@ -1,5 +1,5 @@
 import p5 from "p5";
-import { p } from "./shared";
+import { p } from "../shared";
 
 export const create = (onDrop: (file: p5.File) => void) => {
   const dropzone = p.createDiv();
