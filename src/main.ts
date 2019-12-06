@@ -2,6 +2,7 @@ import p5 from "p5";
 import { p, setP5Instance } from "./shared";
 import * as DropZone from "./drop-zone";
 import * as Button from "./button";
+import * as ImgElement from "./img-element";
 
 const originalImages: p5.Element[] = [];
 const originalImageColumns = 10;
@@ -9,37 +10,38 @@ const thumbnailSize = 960 / 10;
 
 let gridImage: p5.Graphics | undefined = undefined;
 
+const onLoadThumbnail = (thumbnail: p5.Element) => {
+  const originalSize = thumbnail.size() as {
+    width: number;
+    height: number;
+  };
+  const { width, height } = originalSize;
+  const scaleFactor = thumbnailSize / Math.max(width, height);
+
+  thumbnail.size(width * scaleFactor, height * scaleFactor);
+
+  const thumbnailRow = Math.floor(originalImages.length / originalImageColumns);
+  const thumbnailColumn = originalImages.length % originalImageColumns;
+  thumbnail.position(
+    thumbnailSize * thumbnailColumn,
+    30 + thumbnailSize * thumbnailRow
+  );
+};
+
 const addImage = (file: p5.File) => {
   if (file.type !== "image") return;
 
-  const thumbnail = p.createImg(file.data, file.name, () => {
-    if (!thumbnail) return;
-
-    const originalSize = thumbnail.size() as { width: number; height: number };
-    const { width, height } = originalSize;
-    const scaleFactor = thumbnailSize / Math.max(width, height);
-
-    thumbnail.size(width * scaleFactor, height * scaleFactor);
-
-    const thumbnailRow = Math.floor(
-      originalImages.length / originalImageColumns
-    );
-    const thumbnailColumn = originalImages.length % originalImageColumns;
-    thumbnail.position(
-      thumbnailSize * thumbnailColumn,
-      30 + thumbnailSize * thumbnailRow
-    );
+  ImgElement.create({
+    file,
+    alt: file.name,
+    onLoad: onLoadThumbnail
   });
 
-  const img = p.createImg(file.data, undefined, () => {
-    if (!img) {
-      console.warn(`"Failed to load ${file.name}`);
-      return;
-    }
-
-    img.hide();
-
-    originalImages.push(img);
+  ImgElement.create({
+    file,
+    hide: true,
+    onLoad: img => originalImages.push(img),
+    warnOnFail: true
   });
 };
 
