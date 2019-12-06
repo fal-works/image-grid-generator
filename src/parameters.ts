@@ -47,9 +47,7 @@ const validateNumber = (value: any, defaultValue: number) =>
 const validateString = (value: any, defaultValue: string) =>
   typeof value === "string" ? value : defaultValue;
 
-export const parse = (jsonString: string): Unit => {
-  const parsed = JSON.parse(jsonString, reviver);
-
+const validate = (parsed: any): Unit => {
   const width = validateNumber(parsed.width, defaultValues.width);
   const height = validateNumber(parsed.height, defaultValues.height);
   const columns = validateNumber(parsed.columns, defaultValues.columns);
@@ -83,6 +81,16 @@ export const parse = (jsonString: string): Unit => {
     innerMargin,
     backgroundColorCode
   };
+};
+
+export const parse = (jsonString: string): Unit => {
+  if (typeof jsonString !== "string") return defaultValues;
+
+  try {
+    return validate(JSON.parse(jsonString, reviver));
+  } catch (_) {
+    return defaultValues;
+  }
 };
 
 export const calculate = (parameters: Unit) => {
