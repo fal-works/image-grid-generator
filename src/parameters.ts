@@ -64,12 +64,33 @@ export const parse = (jsonString: string): Unit => {
 };
 
 export const calculate = (parameters: Unit) => {
-  const { columns, rows, outerMargin } = parameters;
+  const { width, height, columns, rows, outerMargin, innerMargin } = parameters;
+
   const contentWidth = parameters.width - outerMargin.left - outerMargin.right;
   const contentHeight =
     parameters.height - outerMargin.top - outerMargin.bottom;
+
+  const contentLeftX = outerMargin.left;
+  const contentTopY = outerMargin.top;
+  const contentRightX = width - outerMargin.right;
+  const contentBottomY = height - outerMargin.bottom;
+
   const columnWidth = contentWidth / columns;
   const rowHeight = contentHeight / rows;
 
-  return { contentWidth, contentHeight, columnWidth, rowHeight };
+  const cellWidth = (contentWidth - (columns - 1) * innerMargin) / columns;
+  const cellHeight = (contentHeight - (rows - 1) * innerMargin) / rows;
+
+  return {
+    contentWidth,
+    contentHeight,
+    contentLeftX,
+    contentTopY,
+    contentRightX,
+    contentBottomY,
+    columnWidth,
+    rowHeight,
+    cellWidth,
+    cellHeight
+  };
 };

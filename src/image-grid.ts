@@ -11,35 +11,41 @@ export const create = (
     height: graphicsHeight,
     rows,
     columns,
-    outerMargin
+    outerMargin,
+    innerMargin
   } = parameters;
   const imageCount = images.length;
 
-  const { columnWidth, rowHeight } = Parameters.calculate(parameters);
-
-  let imageIndex = 0;
+  const { cellWidth, cellHeight } = Parameters.calculate(parameters);
 
   const graphics = p.createGraphics(graphicsWidth, graphicsHeight);
   graphics.push();
   graphics.imageMode(p.CENTER);
   graphics.translate(
-    outerMargin.left + columnWidth / 2,
-    outerMargin.top + rowHeight / 2
+    outerMargin.left + cellWidth / 2,
+    outerMargin.top + cellHeight / 2
   );
 
-  for (let row = 0; row < rows; row += 1) {
-    const y = row * rowHeight;
+  let imageIndex = 0;
 
-    for (let column = 0; column < columns; column += 1) {
+  for (
+    let row = 0, y = 0;
+    row < rows;
+    row += 1, y += cellHeight + innerMargin
+  ) {
+    for (
+      let column = 0, x = 0;
+      column < columns;
+      column += 1, x += cellWidth + innerMargin
+    ) {
       if (imageIndex >= imageCount) break;
-      const x = column * columnWidth;
 
       const image = images[imageIndex++];
       const imageWidth = (image as any).width as number;
       const imageHeight = (image as any).height as number;
       const scaleFactor = Math.min(
-        columnWidth / imageWidth,
-        rowHeight / imageHeight
+        cellWidth / imageWidth,
+        cellHeight / imageHeight
       );
       graphics.image(
         image,
