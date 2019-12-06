@@ -12,7 +12,9 @@ export const draw = (parameters: Parameters.Unit) => {
     contentRightX,
     contentBottomY,
     columnWidth,
-    rowHeight
+    rowHeight,
+    cellWidth,
+    cellHeight
   } = Parameters.calculate(parameters);
 
   p.push();
@@ -29,29 +31,26 @@ export const draw = (parameters: Parameters.Unit) => {
   );
 
   if (innerMargin <= 0) {
-    for (let i = 1; i < columns; i += 1) {
-      const x = contentLeftX + i * columnWidth;
+    for (let i = 1, x = contentLeftX; i < columns; i += 1) {
+      x += columnWidth;
       p.line(x, contentTopY, x, contentBottomY);
     }
-    for (let i = 1; i < rows; i += 1) {
-      const y = contentTopY + i * rowHeight;
+    for (let i = 1, y = contentTopY; i < rows; i += 1) {
+      y += rowHeight;
       p.line(contentLeftX, y, contentRightX, y);
     }
   } else {
-    const halfInnerMargin = innerMargin / 2;
-    for (let i = 1; i < columns; i += 1) {
-      const x = contentLeftX + i * columnWidth;
-      const leftX = x - halfInnerMargin;
-      const rightX = x + halfInnerMargin;
-      p.line(leftX, contentTopY, leftX, contentBottomY);
-      p.line(rightX, contentTopY, rightX, contentBottomY);
+    for (let i = 1, x = contentLeftX; i < columns; i += 1) {
+      x += cellWidth;
+      p.line(x, contentTopY, x, contentBottomY);
+      x += innerMargin;
+      p.line(x, contentTopY, x, contentBottomY);
     }
-    for (let i = 1; i < rows; i += 1) {
-      const y = contentTopY + i * rowHeight;
-      const topY = y - halfInnerMargin;
-      const bottomY = y + halfInnerMargin;
-      p.line(contentLeftX, topY, contentRightX, topY);
-      p.line(contentLeftX, bottomY, contentRightX, bottomY);
+    for (let i = 1, y = contentTopY; i < rows; i += 1) {
+      y += cellHeight;
+      p.line(contentLeftX, y, contentRightX, y);
+      y += innerMargin;
+      p.line(contentLeftX, y, contentRightX, y);
     }
   }
 
