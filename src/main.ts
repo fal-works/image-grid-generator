@@ -13,7 +13,7 @@ let gridImage: p5.Graphics | undefined = undefined;
 
 const addThumbnail = (file: p5.File) => {
   if (file.type !== "image") {
-    console.warn(`Dropped file that is not an image:\n${file}`);
+    console.warn(`Dropped file that is not an image:`, file);
     return;
   }
 
