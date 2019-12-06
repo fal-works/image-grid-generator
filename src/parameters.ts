@@ -1,14 +1,16 @@
+type OuterMargin = {
+  readonly top: number;
+  readonly bottom: number;
+  readonly left: number;
+  readonly right: number;
+};
+
 export type Unit = {
   readonly width: number;
   readonly height: number;
   readonly columns: number;
   readonly rows: number;
-  readonly outerMargin: {
-    readonly top: number;
-    readonly bottom: number;
-    readonly left: number;
-    readonly right: number;
-  };
+  readonly outerMargin: OuterMargin;
   readonly innerMargin: number;
   readonly backgroundColorCode: string;
 };
@@ -41,11 +43,33 @@ const reviver = (key: string, value: any) =>
     ? value
     : undefined;
 
-const validateNumber = (value: any, defaultValue: number) =>
+const validateNumber = (value: any, defaultValue: number): number =>
   Number.isFinite(value) && value < 10000 ? value : defaultValue;
 
-const validateString = (value: any, defaultValue: string) =>
+const validateString = (value: any, defaultValue: string): string =>
   typeof value === "string" ? value : defaultValue;
+
+const validateOuterMargin = (parsed: any): OuterMargin => {
+  const defaultMargin = defaultValues.outerMargin;
+
+  if (typeof parsed === "number") {
+    const margin = validateNumber(parsed, defaultMargin.top);
+
+    return {
+      top: margin,
+      bottom: margin,
+      left: margin,
+      right: margin
+    };
+  }
+
+  return {
+    top: validateNumber(parsed.top, defaultMargin.top),
+    bottom: validateNumber(parsed.bottom, defaultMargin.bottom),
+    left: validateNumber(parsed.left, defaultMargin.left),
+    right: validateNumber(parsed.right, defaultMargin.right)
+  };
+};
 
 const validate = (parsed: any): Unit => {
   const width = validateNumber(parsed.width, defaultValues.width);
@@ -53,14 +77,7 @@ const validate = (parsed: any): Unit => {
   const columns = validateNumber(parsed.columns, defaultValues.columns);
   const rows = validateNumber(parsed.rows, defaultValues.rows);
 
-  const parsedOuterMargin = parsed.outerMargin;
-  const defaultOuterMargin = defaultValues.outerMargin;
-  const outerMargin = {
-    top: validateNumber(parsedOuterMargin.top, defaultOuterMargin.top),
-    bottom: validateNumber(parsedOuterMargin.bottom, defaultOuterMargin.bottom),
-    left: validateNumber(parsedOuterMargin.left, defaultOuterMargin.left),
-    right: validateNumber(parsedOuterMargin.right, defaultOuterMargin.right)
-  };
+  const outerMargin = validateOuterMargin(parsed.outerMargin);
 
   const innerMargin = validateNumber(
     parsed.innerMargin,
