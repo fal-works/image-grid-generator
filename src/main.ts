@@ -22,7 +22,18 @@ const completeGenerate = (rows: number, columns: number) => (
     wholeSize: canvasSize
   });
 
-  p.image(grid, p.width / 2, p.height / 2, grid.width, grid.height);
+  const scaleFactor = Math.max(
+    1,
+    Math.min(p.width / grid.width, p.height / grid.height)
+  );
+
+  p.image(
+    grid,
+    p.width / 2,
+    p.height / 2,
+    scaleFactor * grid.width,
+    scaleFactor * grid.height
+  );
 
   gridImage = grid;
 };
