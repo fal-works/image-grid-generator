@@ -71,13 +71,15 @@ const saveResult = () => {
 
 const setupDropZone = () => {
   const thumbnails = ThumbnailArea.create({
-    position: Settings.dropZonePosition,
-    size: Settings.dropZoneSize,
-    initialColumns: 8
+    position: Settings.thumbnailAreaPosition,
+    size: Settings.thumbnailAreaSize,
+    initialColumns: 4
   });
 
-  const onAddThumbnail = (_: p5.Element, file: p5.File) =>
+  const onAddThumbnail = (img: p5.Element, file: p5.File) => {
+    img.style("pointer-events", "none");
     imageFiles.push(file);
+  };
   const onDrop = (file: p5.File) =>
     ThumbnailArea.add(thumbnails, file, onAddThumbnail);
 

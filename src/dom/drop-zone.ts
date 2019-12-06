@@ -11,20 +11,21 @@ export const create = (parameters: {
   const { position, size, onDrop } = parameters;
 
   const dropzone = p.createDiv();
+
+  const highlight = () => dropzone.style("background-color", "#E0F4FF");
+  const unhighlight = () => dropzone.style("background-color", "#FDFDFD");
+
   setPosition(dropzone, position);
   dropzone.size(size.width, size.height);
-
-  function highlight() {
-    dropzone.style("background-color", "#ccc");
-  }
-
-  function unhighlight() {
-    dropzone.style("background-color", "#fff");
-  }
 
   dropzone.dragOver(highlight);
   dropzone.dragLeave(unhighlight);
   dropzone.drop(onDrop, unhighlight);
+
+  dropzone.style("border-style", "solid");
+  dropzone.style("border-color", "#E0E8F0");
+  dropzone.style("border-width", "1px");
+  unhighlight();
 
   return dropzone;
 };
