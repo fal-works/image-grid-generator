@@ -7,25 +7,36 @@ export const create = (parameters: {
   position: Position;
   size: RectangleSize;
   onDrop: (file: p5.File) => void;
+  fontFamily?: string;
 }) => {
-  const { position, size, onDrop } = parameters;
+  const { position, size, onDrop, fontFamily } = parameters;
 
-  const dropzone = p.createDiv();
+  const dropZone = p.createDiv("Drop image files here");
 
-  const highlight = () => dropzone.style("background-color", "#E0F4FF");
-  const unhighlight = () => dropzone.style("background-color", "#FDFDFD");
+  const highlight = () => dropZone.style("background-color", "#E0F4FF");
+  const unhighlight = () => dropZone.style("background-color", "#FDFDFD");
 
-  setPosition(dropzone, position);
-  dropzone.size(size.width, size.height);
+  setPosition(dropZone, position)
+    .size(size.width, size.height)
+    .style("font-size", "x-large")
+    .style("color", "#B0C0D0")
+    .style("border-style", "solid")
+    .style("border-color", "#E0E8F0")
+    .style("border-width", "1px")
+    .style("padding", "20px")
+    .style("box-sizing", "border-box");
 
-  dropzone.dragOver(highlight);
-  dropzone.dragLeave(unhighlight);
-  dropzone.drop(onDrop, unhighlight);
+  if (fontFamily) dropZone.style("font-family", fontFamily);
 
-  dropzone.style("border-style", "solid");
-  dropzone.style("border-color", "#E0E8F0");
-  dropzone.style("border-width", "1px");
+  dropZone
+    .dragOver(highlight)
+    .dragLeave(unhighlight)
+    .drop(onDrop, () => {
+      unhighlight();
+      dropZone.elt.innerHTML = "";
+    });
+
   unhighlight();
 
-  return dropzone;
+  return dropZone;
 };

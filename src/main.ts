@@ -86,7 +86,8 @@ const setupDropZone = () => {
   DropZone.create({
     position: Settings.dropZonePosition,
     size: Settings.dropZoneSize,
-    onDrop
+    onDrop,
+    fontFamily: "Montserrat"
   });
 };
 
