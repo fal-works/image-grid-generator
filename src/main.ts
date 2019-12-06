@@ -18,6 +18,7 @@ const imageFiles: p5.File[] = [];
 let gridImage: p5.Graphics | undefined = undefined;
 let parameterArea: p5.Element;
 let guideMode = false;
+let processing = false;
 let drawGeneratedGrid = () => {
   p.background(255);
   p.push();
@@ -30,9 +31,24 @@ let drawGeneratedGrid = () => {
 
 // ---- functions -------------------------------------------------------------
 
+const startProcessing = () => {
+  processing = true;
+  p.cursor(p.WAIT);
+};
+
+const endProcessing = () => {
+  processing = false;
+  p.cursor(p.ARROW);
+};
+
 const completeGenerate = (parameters: Parameters.Unit) => (
   imgList: readonly p5.Element[]
 ) => {
+  if (imgList.length <= 0) {
+    endProcessing();
+    return;
+  }
+
   const grid = ImageGrid.create(imgList, parameters);
 
   const scaleFactor = Math.min(
@@ -50,14 +66,20 @@ const completeGenerate = (parameters: Parameters.Unit) => (
   drawGeneratedGrid();
 
   gridImage = grid;
+  endProcessing();
 };
 
 const startGenerate = () => {
-  const parameters = Parameters.parse(parameterArea.value().toString());
+  if (processing) return;
 
-  const files: p5.File[] = p
-    .shuffle(imageFiles)
-    .slice(0, parameters.rows * parameters.columns);
+  const parameters = Parameters.parse(parameterArea.value().toString());
+  const cellCount = parameters.rows * parameters.columns;
+  if (cellCount < 1) return;
+
+  processing = true;
+  startProcessing();
+
+  const files: p5.File[] = p.shuffle(imageFiles).slice(0, cellCount);
 
   ImgElement.createList({
     files,
