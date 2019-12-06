@@ -12,4 +12,6 @@ export const create = (parameters: {
   const area = p.createElement("textarea", initialValue);
   setPosition(area, position);
   area.size(size.width, size.height);
+
+  return area;
 };

@@ -4,26 +4,28 @@ import * as DropZone from "./dom/drop-zone";
 import * as Button from "./dom/button";
 import * as ImgElement from "./dom/img-element";
 import * as TextArea from "./dom/text-area";
+import { setPosition } from "./dom/utility";
 import * as Settings from "./settings";
 import * as ThumbnailArea from "./thumbnail-area";
 import * as ImageGrid from "./image-grid";
-import { setPosition } from "./dom/utility";
+import * as Parameters from "./parameters";
 
 const imageFiles: p5.File[] = [];
 
 let gridImage: p5.Graphics | undefined = undefined;
+let parameterArea: p5.Element;
 
-const completeGenerate = (rows: number, columns: number) => (
+const completeGenerate = (parameters: Parameters.Unit) => (
   imgList: readonly p5.Element[]
 ) => {
   const grid = ImageGrid.create({
     images: imgList,
-    rows,
-    columns,
-    wholeSize: Settings.canvasSize
+    rows: parameters.rows,
+    columns: parameters.columns,
+    wholeSize: parameters
   });
 
-  const scaleFactor = Math.max(
+  const scaleFactor = Math.min(
     1,
     Math.min(p.width / grid.width, p.height / grid.height)
   );
@@ -42,16 +44,17 @@ const completeGenerate = (rows: number, columns: number) => (
 const startGenerate = () => {
   p.background(255);
 
-  const rows = 3;
-  const columns = 3;
+  const parameters = Parameters.parse(parameterArea.value().toString());
 
-  const files: p5.File[] = p.shuffle(imageFiles).slice(0, rows * columns);
+  const files: p5.File[] = p
+    .shuffle(imageFiles)
+    .slice(0, parameters.rows * parameters.columns);
 
   ImgElement.createList({
     files,
     hide: true,
     warnOnFail: true,
-    onComplete: completeGenerate(rows, columns)
+    onComplete: completeGenerate(parameters)
   });
 };
 
@@ -103,10 +106,10 @@ const setup = () => {
     size: Settings.saveButtonSize
   });
 
-  TextArea.create({
+  parameterArea = TextArea.create({
     position: Settings.textAreaPosition,
     size: Settings.textAreaSize,
-    initialValue: "aaaaaaa"
+    initialValue: Parameters.defaultString
   });
 };
 
