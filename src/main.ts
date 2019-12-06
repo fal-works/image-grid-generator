@@ -1,20 +1,13 @@
 import p5 from "p5";
+import { p, setP5Instance } from "./shared";
+import * as DropZone from "./drop-zone";
+import * as Button from "./button";
 
-let p: p5;
-let dropzone: p5.Element;
 const originalImages: p5.Element[] = [];
 const originalImageColumns = 10;
 const thumbnailSize = 960 / 10;
 
 let gridImage: p5.Graphics | undefined = undefined;
-
-function highlight() {
-  dropzone.style("background-color", "#ccc");
-}
-
-function unhighlight() {
-  dropzone.style("background-color", "#fff");
-}
 
 const addImage = (file: p5.File) => {
   if (file.type !== "image") return;
@@ -86,25 +79,24 @@ const saveResult = () => {
 const setup = () => {
   p.createCanvas(960, 960);
 
-  dropzone = p.createDiv();
-  dropzone.position(0, 0);
-  dropzone.size(p.width, p.height / 2);
-  dropzone.dragOver(highlight);
-  dropzone.dragLeave(unhighlight);
-  dropzone.drop(addImage, unhighlight);
+  DropZone.create(addImage);
 
-  const generateButton = p.createButton("generate");
-  generateButton.mouseClicked(generate);
-  generateButton.position(0, 5);
-  generateButton.size(100, 25);
+  Button.create({
+    label: "generate",
+    onClick: generate,
+    position: { x: 0, y: 5 },
+    size: { width: 100, height: 25 }
+  });
 
-  const saveButton = p.createButton("save");
-  saveButton.mouseClicked(saveResult);
-  saveButton.position(120, 5);
-  saveButton.size(80, 25);
+  Button.create({
+    label: "save",
+    onClick: saveResult,
+    position: { x: 120, y: 5 },
+    size: { width: 80, height: 25 }
+  });
 };
 
 new p5(p5Instance => {
-  p = p5Instance;
+  setP5Instance(p5Instance);
   p.setup = setup;
 });
