@@ -3,29 +3,25 @@ import { p, setP5Instance } from "./shared";
 import * as DropZone from "./drop-zone";
 import * as Button from "./button";
 import * as ImgElement from "./img-element";
+import * as DomUtility from "./dom-utility";
 
 const originalImages: p5.Element[] = [];
 const originalImageColumns = 10;
-const thumbnailSize = 960 / 10;
+const thumbnailBoxSize = {
+  width: 960 / 10,
+  height: 960 / 10
+};
 
 let gridImage: p5.Graphics | undefined = undefined;
 
 const onLoadThumbnail = (thumbnail: p5.Element) => {
-  const originalSize = thumbnail.size() as {
-    width: number;
-    height: number;
-  };
-  const { width, height } = originalSize;
-  const scaleFactor = thumbnailSize / Math.max(width, height);
-
-  thumbnail.size(width * scaleFactor, height * scaleFactor);
-
   const thumbnailRow = Math.floor(originalImages.length / originalImageColumns);
   const thumbnailColumn = originalImages.length % originalImageColumns;
-  thumbnail.position(
-    thumbnailSize * thumbnailColumn,
-    30 + thumbnailSize * thumbnailRow
-  );
+  const thumbnailBoxPosition = {
+    x: thumbnailBoxSize.width * thumbnailColumn,
+    y: 30 + thumbnailBoxSize.height * thumbnailRow
+  };
+  DomUtility.setInBox(thumbnail, thumbnailBoxPosition, thumbnailBoxSize);
 };
 
 const addImage = (file: p5.File) => {
