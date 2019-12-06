@@ -1,6 +1,7 @@
 import p5 from "p5";
 import { p } from "../shared";
 import { Position, RectangleSize } from "../types";
+import { setPosition } from "./utility";
 
 export const create = (parameters: {
   position: Position;
@@ -10,7 +11,7 @@ export const create = (parameters: {
   const { position, size, onDrop } = parameters;
 
   const dropzone = p.createDiv();
-  dropzone.position(position.x, position.y);
+  setPosition(dropzone, position);
   dropzone.size(size.width, size.height);
 
   function highlight() {

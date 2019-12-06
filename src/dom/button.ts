@@ -1,4 +1,5 @@
 import { p } from "../shared";
+import { setPosition } from "./utility";
 
 export const create = (parameters: {
   label: string;
@@ -10,7 +11,7 @@ export const create = (parameters: {
 
   const button = p.createButton(label);
   button.mouseClicked(onClick);
-  button.position(position.x, position.y);
+  setPosition(button, position);
   button.size(size.width, size.height);
 
   return button;

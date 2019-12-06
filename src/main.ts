@@ -4,14 +4,10 @@ import * as DropZone from "./dom/drop-zone";
 import * as Button from "./dom/button";
 import * as ImgElement from "./dom/img-element";
 import * as TextArea from "./dom/text-area";
-import {
-  canvasPosition,
-  canvasSize,
-  dropZonePosition,
-  dropZoneSize
-} from "./settings";
+import * as Settings from "./settings";
 import * as ThumbnailArea from "./thumbnail-area";
 import * as ImageGrid from "./image-grid";
+import { setPosition } from "./dom/utility";
 
 const imageFiles: p5.File[] = [];
 
@@ -24,7 +20,7 @@ const completeGenerate = (rows: number, columns: number) => (
     images: imgList,
     rows,
     columns,
-    wholeSize: canvasSize
+    wholeSize: Settings.canvasSize
   });
 
   const scaleFactor = Math.max(
@@ -67,8 +63,8 @@ const saveResult = () => {
 
 const setupDropZone = () => {
   const thumbnails = ThumbnailArea.create({
-    position: dropZonePosition,
-    size: dropZoneSize,
+    position: Settings.dropZonePosition,
+    size: Settings.dropZoneSize,
     initialColumns: 8
   });
 
@@ -78,16 +74,16 @@ const setupDropZone = () => {
     ThumbnailArea.add(thumbnails, file, onAddThumbnail);
 
   DropZone.create({
-    position: dropZonePosition,
-    size: dropZoneSize,
+    position: Settings.dropZonePosition,
+    size: Settings.dropZoneSize,
     onDrop
   });
 };
 
 const setup = () => {
-  const { width, height } = canvasSize;
+  const { width, height } = Settings.canvasSize;
   const canvas = p.createCanvas(width, height);
-  canvas.position(canvasPosition.x, canvasPosition.y);
+  setPosition(canvas, Settings.canvasPosition);
 
   p.imageMode(p.CENTER);
 
@@ -96,20 +92,20 @@ const setup = () => {
   Button.create({
     label: "generate",
     onClick: startGenerate,
-    position: { x: 0, y: 480 },
-    size: { width: 120, height: 30 }
+    position: Settings.generateButtonPosition,
+    size: Settings.generateButtonSize
   });
 
   Button.create({
     label: "save",
     onClick: saveResult,
-    position: { x: 120, y: 480 },
-    size: { width: 80, height: 30 }
+    position: Settings.saveButtonPosition,
+    size: Settings.saveButtonSize
   });
 
   TextArea.create({
-    position: { x: 0, y: 520 },
-    size: { width: 560, height: 200 },
+    position: Settings.textAreaPosition,
+    size: Settings.textAreaSize,
     initialValue: "aaaaaaa"
   });
 };
@@ -117,4 +113,4 @@ const setup = () => {
 new p5(p5Instance => {
   setP5Instance(p5Instance);
   p.setup = setup;
-});
+}, document.getElementById("ImageGridResult") || document.body);

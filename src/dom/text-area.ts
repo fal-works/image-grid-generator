@@ -1,5 +1,6 @@
 import { p } from "../shared";
 import { Position, RectangleSize } from "../types";
+import { setPosition } from "./utility";
 
 export const create = (parameters: {
   readonly position: Position;
@@ -9,6 +10,6 @@ export const create = (parameters: {
   const { position, size, initialValue } = parameters;
 
   const area = p.createElement("textarea", initialValue);
-  area.position(position.x, position.y);
+  setPosition(area, position);
   area.size(size.width, size.height);
 };
