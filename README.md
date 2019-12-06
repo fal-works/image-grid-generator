@@ -1,1 +1,1 @@
-Image grid.
+# Image Grid Generator
