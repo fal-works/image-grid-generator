@@ -51,7 +51,7 @@ const saveResult = () => {
 const setupDropZone = () => {
   const thumbnails = ThumbnailArea.create({
     position: { x: 0, y: 30 },
-    width: p.width,
+    size: { width: p.width, height: p.height / 2 },
     columns: 8
   });
 

@@ -1,4 +1,5 @@
 import p5 from "p5";
+import { Position, RectangleSize } from "./types";
 
 export const getSize = (element: p5.Element) =>
   element.size() as {
@@ -6,10 +7,7 @@ export const getSize = (element: p5.Element) =>
     height: number;
   };
 
-export const fitToBox = (
-  element: p5.Element,
-  boxSize: { width: number; height: number }
-) => {
+export const fitToBox = (element: p5.Element, boxSize: RectangleSize) => {
   const { width, height } = getSize(element);
   const scaleFactor = Math.min(boxSize.width / width, boxSize.height / height);
   element.size(width * scaleFactor, height * scaleFactor);
@@ -17,8 +15,8 @@ export const fitToBox = (
 
 export const setInBox = (
   element: p5.Element,
-  boxPosition: { x: number; y: number },
-  boxSize: { width: number; height: number }
+  boxPosition: Position,
+  boxSize: RectangleSize
 ) => {
   fitToBox(element, boxSize);
 

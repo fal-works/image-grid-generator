@@ -1,26 +1,27 @@
 import p5 from "p5";
+import { Position, RectangleSize } from "./types";
 import * as DomUtility from "./dom-utility";
 import * as ImgElement from "./img-element";
 
 export interface Unit {
-  readonly position: { x: number; y: number };
-  readonly width: number;
+  readonly position: Position;
+  readonly size: RectangleSize;
   readonly columns: number;
-  readonly cellSize: { width: number; height: number };
+  readonly cellSize: RectangleSize;
   registeredCount: number;
 }
 
 export const create = (parameters: {
-  position: { x: number; y: number };
-  width: number;
+  position: Position;
+  size: RectangleSize;
   columns: number;
 }): Unit => {
-  const { position, width, columns } = parameters;
-  const cellWidth = width / columns;
+  const { position, size, columns } = parameters;
+  const cellWidth = size.width / columns;
 
   return {
     position,
-    width,
+    size,
     columns,
     cellSize: { width: cellWidth, height: cellWidth },
     registeredCount: 0

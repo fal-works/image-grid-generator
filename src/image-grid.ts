@@ -1,11 +1,12 @@
 import p5 from "p5";
 import { p } from "./shared";
+import { RectangleSize } from "./types";
 
 export const create = (parameters: {
   images: readonly p5.Image[] | readonly p5.Element[];
   rows: number;
   columns: number;
-  wholeSize: { width: number; height: number };
+  wholeSize: RectangleSize;
 }) => {
   const { images, rows, columns, wholeSize } = parameters;
   const imageCount = images.length;
