@@ -3,26 +3,12 @@ import { p, setP5Instance } from "./shared";
 import * as DropZone from "./drop-zone";
 import * as Button from "./button";
 import * as ImgElement from "./img-element";
-import * as DomUtility from "./dom-utility";
+import { CANVAS_SIZE } from "./settings";
+import * as Thumbnail from "./thumbnail";
 
 const originalImages: p5.Element[] = [];
-const originalImageColumns = 10;
-const thumbnailBoxSize = {
-  width: 960 / 10,
-  height: 960 / 10
-};
 
 let gridImage: p5.Graphics | undefined = undefined;
-
-const onLoadThumbnail = (thumbnail: p5.Element) => {
-  const thumbnailRow = Math.floor(originalImages.length / originalImageColumns);
-  const thumbnailColumn = originalImages.length % originalImageColumns;
-  const thumbnailBoxPosition = {
-    x: thumbnailBoxSize.width * thumbnailColumn,
-    y: 30 + thumbnailBoxSize.height * thumbnailRow
-  };
-  DomUtility.setInBox(thumbnail, thumbnailBoxPosition, thumbnailBoxSize);
-};
 
 const addImage = (file: p5.File) => {
   if (file.type !== "image") return;
@@ -30,7 +16,7 @@ const addImage = (file: p5.File) => {
   ImgElement.create({
     file,
     alt: file.name,
-    onLoad: onLoadThumbnail
+    onLoad: Thumbnail.onLoad
   });
 
   ImgElement.create({
@@ -75,7 +61,7 @@ const saveResult = () => {
 };
 
 const setup = () => {
-  p.createCanvas(960, 960);
+  p.createCanvas(CANVAS_SIZE.width, CANVAS_SIZE.height);
 
   DropZone.create(addImage);
 
