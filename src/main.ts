@@ -9,11 +9,16 @@ import * as Settings from "./settings";
 import * as ThumbnailArea from "./thumbnail-area";
 import * as ImageGrid from "./image-grid";
 import * as Parameters from "./parameters";
+import * as Guide from "./guide";
 
 const imageFiles: p5.File[] = [];
 
 let gridImage: p5.Graphics | undefined = undefined;
 let parameterArea: p5.Element;
+let guideMode = false;
+let drawGeneratedGrid = () => {
+  return;
+};
 
 const completeGenerate = (parameters: Parameters.Unit) => (
   imgList: readonly p5.Element[]
@@ -24,14 +29,15 @@ const completeGenerate = (parameters: Parameters.Unit) => (
     1,
     Math.min(p.width / grid.width, p.height / grid.height)
   );
+  const displayWidth = scaleFactor * grid.width;
+  const displayHeight = scaleFactor * grid.height;
 
-  p.image(
-    grid,
-    p.width / 2,
-    p.height / 2,
-    scaleFactor * grid.width,
-    scaleFactor * grid.height
-  );
+  drawGeneratedGrid = () => {
+    p.background(255);
+    p.image(grid, p.width / 2, p.height / 2, displayWidth, displayHeight);
+  };
+
+  drawGeneratedGrid();
 
   gridImage = grid;
 };
@@ -78,15 +84,7 @@ const setupDropZone = () => {
   });
 };
 
-const setup = () => {
-  const { width, height } = Settings.canvasSize;
-  const canvas = p.createCanvas(width, height);
-  setPosition(canvas, Settings.canvasPosition);
-
-  p.imageMode(p.CENTER);
-
-  setupDropZone();
-
+const setupButtons = () => {
   Button.create({
     label: "generate",
     onClick: startGenerate,
@@ -100,12 +98,51 @@ const setup = () => {
     position: Settings.saveButtonPosition,
     size: Settings.saveButtonSize
   });
+};
 
+const setupParameterArea = () => {
   parameterArea = TextArea.create({
     position: Settings.textAreaPosition,
     size: Settings.textAreaSize,
     initialValue: Parameters.defaultString
   });
+
+  parameterArea.elt.addEventListener("mouseenter", () => {
+    guideMode = true;
+    Guide.draw(Parameters.parse(parameterArea.value().toString()));
+  });
+  parameterArea.elt.addEventListener("mouseleave", () => {
+    guideMode = false;
+    drawGeneratedGrid();
+  });
+
+  let parameterAreaValue = Parameters.defaultString;
+  setInterval(() => {
+    if (!guideMode) return;
+
+    const currentValue = parameterArea.value().toString();
+    if (currentValue === parameterAreaValue) return;
+
+    drawGeneratedGrid();
+    Guide.draw(Parameters.parse(parameterArea.value().toString()));
+
+    parameterAreaValue = currentValue;
+  }, 100);
+};
+
+const setup = () => {
+  const { width, height } = Settings.canvasSize;
+  const canvas = p.createCanvas(width, height);
+  setPosition(canvas, Settings.canvasPosition);
+
+  p.imageMode(p.CENTER);
+
+  setupDropZone();
+  setupButtons();
+  setupParameterArea();
+
+  p.background(255);
+  Guide.draw(Parameters.defaultValues);
 };
 
 new p5(p5Instance => {
