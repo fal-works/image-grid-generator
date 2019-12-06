@@ -22,7 +22,7 @@ export const draw = (parameters: Parameters.Unit) => {
   const rowHeight = contentHeight / rows;
 
   p.push();
-  p.stroke(255, 0, 128);
+  p.stroke(255, 64, 128);
   p.noFill();
 
   p.rect(1, 1, width - 2, height - 2);

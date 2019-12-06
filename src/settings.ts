@@ -39,7 +39,7 @@ export const generateButtonPosition: Position = {
 };
 
 const buttonHeight = 30;
-const buttonHorizontalInterval = 20;
+const buttonHorizontalInterval = 10;
 
 export const generateButtonSize: RectangleSize = {
   width: 120,

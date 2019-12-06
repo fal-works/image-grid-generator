@@ -11,6 +11,8 @@ import * as ImageGrid from "./image-grid";
 import * as Parameters from "./parameters";
 import * as Guide from "./guide";
 
+// ---- variables -------------------------------------------------------------
+
 const imageFiles: p5.File[] = [];
 
 let gridImage: p5.Graphics | undefined = undefined;
@@ -19,6 +21,8 @@ let guideMode = false;
 let drawGeneratedGrid = () => {
   return;
 };
+
+// ---- functions -------------------------------------------------------------
 
 const completeGenerate = (parameters: Parameters.Unit) => (
   imgList: readonly p5.Element[]
@@ -43,8 +47,6 @@ const completeGenerate = (parameters: Parameters.Unit) => (
 };
 
 const startGenerate = () => {
-  p.background(255);
-
   const parameters = Parameters.parse(parameterArea.value().toString());
 
   const files: p5.File[] = p
@@ -64,6 +66,8 @@ const saveResult = () => {
 
   p.save(gridImage, `grid-image.png`);
 };
+
+// ---- setup -----------------------------------------------------------------
 
 const setupDropZone = () => {
   const thumbnails = ThumbnailArea.create({
