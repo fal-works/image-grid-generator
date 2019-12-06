@@ -5,10 +5,10 @@ import * as ImgElement from "./img-element";
 
 export interface Unit {
   readonly position: Position;
-  readonly size: RectangleSize;
-  readonly columns: number;
-  readonly cellSize: RectangleSize;
-  registeredCount: number;
+  size: RectangleSize;
+  columns: number;
+  cellSize: RectangleSize;
+  readonly elements: p5.Element[];
 }
 
 export const create = (parameters: {
@@ -24,22 +24,46 @@ export const create = (parameters: {
     size,
     columns,
     cellSize: { width: cellWidth, height: cellWidth },
-    registeredCount: 0
+    elements: []
   };
 };
 
-const onLoad = (area: Unit, thumbnail: p5.Element) => {
-  const index = area.registeredCount++;
-
-  const { position: areaPosition, columns, cellSize } = area;
-
+const setElement = (
+  element: p5.Element,
+  index: number,
+  areaPosition: Position,
+  columns: number,
+  cellSize: RectangleSize
+) => {
   const row = Math.floor(index / columns);
   const column = index % columns;
   const boxPosition = {
     x: areaPosition.x + cellSize.width * column,
     y: areaPosition.y + cellSize.height * row
   };
-  DomUtility.setInBox(thumbnail, boxPosition, cellSize);
+  DomUtility.setInBox(element, boxPosition, cellSize);
+};
+
+export const changeColumnCount = (area: Unit, columns: number) => {
+  const { position: areaPosition, cellSize, elements } = area;
+  area.columns = columns;
+
+  for (let index = 0; index < elements.length; index += 1)
+    setElement(elements[index], index, areaPosition, columns, cellSize);
+
+  return area;
+};
+
+const onLoad = (area: Unit, thumbnail: p5.Element) => {
+  setElement(
+    thumbnail,
+    area.elements.length,
+    area.position,
+    area.columns,
+    area.cellSize
+  );
+
+  area.elements.push(thumbnail);
 };
 
 export const add = (
