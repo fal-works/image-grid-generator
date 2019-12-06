@@ -11,8 +11,11 @@ const imageFiles: p5.File[] = [];
 
 let gridImage: p5.Graphics | undefined = undefined;
 
-const addImage = (file: p5.File) => {
-  if (file.type !== "image") return;
+const addThumbnail = (file: p5.File) => {
+  if (file.type !== "image") {
+    console.warn(`Dropped file that is not an image:\n${file}`);
+    return;
+  }
 
   ImgElement.create({
     file,
@@ -24,29 +27,34 @@ const addImage = (file: p5.File) => {
   });
 };
 
-const generate = () => {
+const completeGenerate = (rows: number, columns: number) => (
+  imgList: readonly p5.Element[]
+) => {
+  const grid = ImageGrid.create({
+    images: imgList,
+    rows,
+    columns,
+    wholeSize: { width: 960, height: 960 }
+  });
+
+  p.image(grid, p.width / 2 - 480 / 2, p.height / 2, 480, 480);
+
+  gridImage = grid;
+};
+
+const startGenerate = () => {
   p.background(255);
 
   const rows = 3;
   const columns = 3;
 
   const files: p5.File[] = p.shuffle(imageFiles).slice(0, rows * columns);
+
   ImgElement.createList({
     files,
     hide: true,
     warnOnFail: true,
-    onComplete: imgList => {
-      const grid = ImageGrid.create({
-        images: imgList,
-        rows,
-        columns,
-        wholeSize: { width: 960, height: 960 }
-      });
-
-      p.image(grid, p.width / 2 - 480 / 2, p.height / 2, 480, 480);
-
-      gridImage = grid;
-    }
+    onComplete: completeGenerate(rows, columns)
   });
 };
 
@@ -59,11 +67,11 @@ const saveResult = () => {
 const setup = () => {
   p.createCanvas(CANVAS_SIZE.width, CANVAS_SIZE.height);
 
-  DropZone.create(addImage);
+  DropZone.create(addThumbnail);
 
   Button.create({
     label: "generate",
-    onClick: generate,
+    onClick: startGenerate,
     position: { x: 0, y: 5 },
     size: { width: 100, height: 25 }
   });
