@@ -7,26 +7,17 @@ export const create = (parameters: {
   position: Position;
   size: RectangleSize;
   onDrop: (file: p5.File) => void;
-  fontFamily?: string;
 }) => {
-  const { position, size, onDrop, fontFamily } = parameters;
+  const { position, size, onDrop } = parameters;
 
   const dropZone = p.createDiv("Drop image files here");
 
-  const highlight = () => dropZone.style("background-color", "#E0F4FF");
+  const highlight = () => dropZone.style("background-color", "#F0FAFF");
   const unhighlight = () => dropZone.style("background-color", "#FDFDFD");
 
-  setPosition(dropZone, position)
-    .size(size.width, size.height)
-    .style("font-size", "x-large")
-    .style("color", "#B0C0D0")
-    .style("border-style", "solid")
-    .style("border-color", "#E0E8F0")
-    .style("border-width", "1px")
-    .style("padding", "20px")
-    .style("box-sizing", "border-box");
+  setPosition(dropZone, position).size(size.width, size.height);
 
-  if (fontFamily) dropZone.style("font-family", fontFamily);
+  dropZone.addClass("drop-zone");
 
   dropZone
     .dragOver(highlight)

@@ -86,8 +86,7 @@ const setupDropZone = () => {
   DropZone.create({
     position: Settings.dropZonePosition,
     size: Settings.dropZoneSize,
-    onDrop,
-    fontFamily: "Montserrat"
+    onDrop
   });
 };
 
@@ -111,8 +110,7 @@ const setupParameterArea = () => {
   parameterArea = TextArea.create({
     position: Settings.parameterAreaPosition,
     size: Settings.parameterAreaSize,
-    initialValue: Parameters.defaultString,
-    fontFamily: "Overpass Mono"
+    initialValue: Parameters.defaultString
   });
 
   parameterArea.elt.addEventListener("mouseenter", () => {

@@ -8,22 +8,70 @@
   <link href="https://fonts.googleapis.com/css?family=Overpass+Mono&display=swap" rel="stylesheet">
   <style type="text/css">
     body {
-      margin: 0;
-      padding: 0;
       width: 1280px;
+      margin-top: 10px;
       margin-right: auto;
       margin-left: auto;
-      padding-top: 20px;
+      padding: 0;
+      font-family: Montserrat;
     }
 
     h1 {
-      font-family: Montserrat
+      display: inline-block;
+    }
+
+    .drop-zone {
+      border: 1px solid #e0e0e0;
+      color: #c0c0c0;
+      font-size: x-large;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    button {
+      font-family: inherit;
+      font-weight: bold;
+      background: #f8f8f8;
+      color: #404040;
+      border: none;
+      box-shadow: 0px 2px 2px #00000060;
+    }
+
+    button:active {
+      box-shadow: none;
+      transform: translateY(2px);
+    }
+
+    button:focus {
+      outline: 0;
+    }
+
+    textarea {
+      padding: 10px;
+      color: #404040;
+      font-family: Overpass Mono;
+      border: solid;
+      border-color: #e0e0e0;
+      border-width: 1px;
+      box-sizing: border-box;
+    }
+
+    textarea:focus {
+      outline: 0;
+    }
+
+    .description {
+      display: inline-block;
+      position: relative;
+      left: 20px;
+      font-size: small;
     }
   </style>
 </head>
 
 <body>
   <h1>Image Grid Generator</h1>
+  <p class="description">Combines multiple image files into one.</p>
   <div id="ImageGridResult" style="position: relative"></div>
 </body>
 

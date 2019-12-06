@@ -6,20 +6,12 @@ export const create = (parameters: {
   readonly position: Position;
   readonly size: RectangleSize;
   readonly initialValue?: string;
-  readonly fontFamily?: string;
 }) => {
-  const { position, size, initialValue, fontFamily } = parameters;
+  const { position, size, initialValue } = parameters;
 
   const area = p.createElement("textarea", initialValue);
 
-  setPosition(area, position)
-    .size(size.width, size.height)
-    .style("color", "#404040")
-    .style("padding", "10px")
-    .style("box-sizing", "border-box")
-    .style("border-color", "#E0E8F0");
-
-  if (fontFamily) area.style("font-family", fontFamily);
+  setPosition(area, position).size(size.width, size.height);
 
   return area;
 };
