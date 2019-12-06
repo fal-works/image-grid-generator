@@ -6,7 +6,7 @@ import * as ImgElement from "./img-element";
 import { CANVAS_SIZE } from "./settings";
 import * as Thumbnail from "./thumbnail";
 
-const originalImages: p5.Element[] = [];
+const imageFiles: p5.File[] = [];
 
 let gridImage: p5.Graphics | undefined = undefined;
 
@@ -16,14 +16,10 @@ const addImage = (file: p5.File) => {
   ImgElement.create({
     file,
     alt: file.name,
-    onLoad: Thumbnail.onLoad
-  });
-
-  ImgElement.create({
-    file,
-    hide: true,
-    onLoad: img => originalImages.push(img),
-    warnOnFail: true
+    onLoad: (img, file) => {
+      Thumbnail.onLoad(img);
+      imageFiles.push(file);
+    }
   });
 };
 
@@ -37,21 +33,27 @@ const generate = () => {
   const cellWidth = g.width / columns;
   const cellHeight = g.height / rows;
 
-  const images: p5.Element[] = p.shuffle(originalImages);
+  const files: p5.File[] = p.shuffle(imageFiles).slice(0, rows * columns);
+  ImgElement.createList({
+    files,
+    hide: true,
+    warnOnFail: true,
+    onComplete: imgList => {
+      for (let row = 0; row < rows; row += 1) {
+        const y = row * cellHeight;
+        for (let column = 0; column < columns; column += 1) {
+          const x = column * cellWidth;
+          const image = imgList.pop();
+          if (!image) break;
+          g.image(image, x, y, cellWidth, cellHeight);
+        }
+      }
 
-  for (let row = 0; row < rows; row += 1) {
-    const y = row * cellHeight;
-    for (let column = 0; column < columns; column += 1) {
-      const image = images.pop();
-      if (!image) break;
-      const x = column * cellWidth;
-      g.image(image, x, y, cellWidth, cellHeight);
+      p.image(g, p.width / 2 - 480 / 2, p.height / 2, 480, 480);
+
+      gridImage = g;
     }
-  }
-
-  p.image(g, p.width / 2 - 480 / 2, p.height / 2, 480, 480);
-
-  gridImage = g;
+  });
 };
 
 const saveResult = () => {
