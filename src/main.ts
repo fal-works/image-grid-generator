@@ -11,22 +11,6 @@ const imageFiles: p5.File[] = [];
 
 let gridImage: p5.Graphics | undefined = undefined;
 
-const addThumbnail = (file: p5.File) => {
-  if (file.type !== "image") {
-    console.warn(`Dropped file that is not an image:`, file);
-    return;
-  }
-
-  ImgElement.create({
-    file,
-    alt: file.name,
-    onLoad: (img, file) => {
-      Thumbnail.onLoad(img);
-      imageFiles.push(file);
-    }
-  });
-};
-
 const completeGenerate = (rows: number, columns: number) => (
   imgList: readonly p5.Element[]
 ) => {
@@ -67,7 +51,9 @@ const saveResult = () => {
 const setup = () => {
   p.createCanvas(CANVAS_SIZE.width, CANVAS_SIZE.height);
 
-  DropZone.create(addThumbnail);
+  const onDropFile = (file: p5.File) =>
+    Thumbnail.add(file, (_, file) => imageFiles.push(file));
+  DropZone.create(onDropFile);
 
   Button.create({
     label: "generate",
