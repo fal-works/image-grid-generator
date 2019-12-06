@@ -14,9 +14,9 @@ export interface Unit {
 export const create = (parameters: {
   position: Position;
   size: RectangleSize;
-  columns: number;
+  initialColumns: number;
 }): Unit => {
-  const { position, size, columns } = parameters;
+  const { position, size, initialColumns: columns } = parameters;
   const cellWidth = size.width / columns;
 
   return {
@@ -44,26 +44,27 @@ const setElement = (
   DomUtility.setInBox(element, boxPosition, cellSize);
 };
 
-export const changeColumnCount = (area: Unit, columns: number) => {
-  const { position: areaPosition, cellSize, elements } = area;
+export const changeColumns = (area: Unit, columns: number) => {
+  const { position: areaPosition, size, elements } = area;
   area.columns = columns;
 
-  for (let index = 0; index < elements.length; index += 1)
-    setElement(elements[index], index, areaPosition, columns, cellSize);
+  const cellWidth = size.width / columns;
+  area.cellSize = { width: cellWidth, height: cellWidth };
 
-  return area;
+  for (let index = 0; index < elements.length; index += 1)
+    setElement(elements[index], index, areaPosition, columns, area.cellSize);
 };
 
 const onLoad = (area: Unit, thumbnail: p5.Element) => {
-  setElement(
-    thumbnail,
-    area.elements.length,
-    area.position,
-    area.columns,
-    area.cellSize
-  );
+  const { position, size, cellSize, columns, elements } = area;
+
+  setElement(thumbnail, elements.length, position, columns, cellSize);
 
   area.elements.push(thumbnail);
+
+  const actualHeight = Math.ceil(elements.length / columns) * cellSize.height;
+
+  if (actualHeight > size.height) changeColumns(area, columns + 1);
 };
 
 export const add = (
