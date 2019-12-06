@@ -3,7 +3,8 @@ import { p, setP5Instance } from "./shared";
 import * as DropZone from "./dom/drop-zone";
 import * as Button from "./dom/button";
 import * as ImgElement from "./dom/img-element";
-import { CANVAS_SIZE } from "./settings";
+import * as TextArea from "./dom/text-area";
+import { canvasSize, dropZoneSize, canvasPosition } from "./settings";
 import * as ThumbnailArea from "./thumbnail-area";
 import * as ImageGrid from "./image-grid";
 
@@ -18,10 +19,10 @@ const completeGenerate = (rows: number, columns: number) => (
     images: imgList,
     rows,
     columns,
-    wholeSize: { width: 960, height: 960 }
+    wholeSize: canvasSize
   });
 
-  p.image(grid, p.width / 2 - 480 / 2, p.height / 2, 480, 480);
+  p.image(grid, p.width / 2, p.height / 2, grid.width, grid.height);
 
   gridImage = grid;
 };
@@ -50,36 +51,50 @@ const saveResult = () => {
 
 const setupDropZone = () => {
   const thumbnails = ThumbnailArea.create({
-    position: { x: 0, y: 30 },
-    size: { width: p.width, height: 0.45 * p.height },
+    position: { x: 0, y: 0 },
+    size: dropZoneSize,
     initialColumns: 8
   });
 
   const onAddThumbnail = (_: p5.Element, file: p5.File) =>
     imageFiles.push(file);
-  const onDropFile = (file: p5.File) =>
+  const onDrop = (file: p5.File) =>
     ThumbnailArea.add(thumbnails, file, onAddThumbnail);
 
-  DropZone.create(onDropFile);
+  DropZone.create({
+    position: { x: 0, y: 0 },
+    size: dropZoneSize,
+    onDrop
+  });
 };
 
 const setup = () => {
-  p.createCanvas(CANVAS_SIZE.width, CANVAS_SIZE.height);
+  const { width, height } = canvasSize;
+  const canvas = p.createCanvas(width, height);
+  canvas.position(canvasPosition.x, canvasPosition.y);
+
+  p.imageMode(p.CENTER);
 
   setupDropZone();
 
   Button.create({
     label: "generate",
     onClick: startGenerate,
-    position: { x: 0, y: 5 },
-    size: { width: 100, height: 25 }
+    position: { x: 0, y: 480 },
+    size: { width: 120, height: 30 }
   });
 
   Button.create({
     label: "save",
     onClick: saveResult,
-    position: { x: 120, y: 5 },
-    size: { width: 80, height: 25 }
+    position: { x: 120, y: 480 },
+    size: { width: 80, height: 30 }
+  });
+
+  TextArea.create({
+    position: { x: 0, y: 520 },
+    size: { width: 560, height: 200 },
+    initialValue: "aaaaaaa"
   });
 };
 
