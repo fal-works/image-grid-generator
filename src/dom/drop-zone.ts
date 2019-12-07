@@ -12,22 +12,28 @@ export const create = (parameters: {
 
   const dropZone = p.createDiv("Drop image files here");
 
-  const highlight = () => dropZone.style("background-color", "#F0FAFF");
-  const unhighlight = () => dropZone.style("background-color", "#FDFDFD");
+  const onDragOver = () => {
+    dropZone.style("background-color", "#F0FAFF");
+    dropZone.style("cursor", "wait");
+  };
+  const onDragLeave = () => {
+    dropZone.style("background-color", "#FDFDFD");
+    dropZone.style("cursor", "auto");
+  };
 
   setPosition(dropZone, position).size(size.width, size.height);
 
   dropZone.addClass("drop-zone");
 
   dropZone
-    .dragOver(highlight)
-    .dragLeave(unhighlight)
+    .dragOver(onDragOver)
+    .dragLeave(onDragLeave)
     .drop(onDrop, () => {
-      unhighlight();
+      onDragLeave();
       dropZone.elt.innerHTML = "";
     });
 
-  unhighlight();
+  onDragLeave();
 
   return dropZone;
 };

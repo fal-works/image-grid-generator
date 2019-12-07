@@ -4,6 +4,7 @@ import { DropZone, Button, ImgElement, Utility as DomUtility } from "./dom";
 import { Settings, ThumbnailArea, ParameterArea, Guide } from "./components";
 import * as ImageGrid from "./image-grid";
 import * as Parameters from "./parameters";
+import { preventDragDrop } from "./prevent-drag-drop";
 
 // ---- variables -------------------------------------------------------------
 
@@ -159,6 +160,8 @@ const setup = () => {
   const { width, height } = Settings.canvasSize;
   const canvas = p.createCanvas(width, height);
   DomUtility.setPosition(canvas, Settings.canvasPosition);
+
+  preventDragDrop();
 
   p.imageMode(p.CENTER);
 
