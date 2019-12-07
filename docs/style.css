@@ -30,6 +30,10 @@ h1 {
     display: inline;
 }
 
+.main-content {
+    height: 640px;
+}
+
 .drop-zone {
     border: 1px solid #e0e0e0;
     color: #c0c0c0;
@@ -96,4 +100,16 @@ textarea:focus {
 
 .underTitle {
     height: 15px;
+}
+
+.footer {
+    text-align: right;
+}
+
+a {
+    color: #808080;
+}
+
+a:hover {
+    color: #ff4080;
 }
