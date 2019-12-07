@@ -75,15 +75,17 @@ const startGenerate = () => {
   const cellCount = parameters.rows * parameters.columns;
   if (cellCount < 1) return;
 
-  startProcessing();
-
   const files: p5.File[] = p.shuffle(imageFiles).slice(0, cellCount);
+  if (files.length <= 0) return;
+
+  startProcessing();
 
   ImgElement.createList({
     files,
     hide: true,
     warnOnFail: true,
-    onComplete: completeGenerate(parameters)
+    onComplete: completeGenerate(parameters),
+    onFailAny: endProcessing
   });
 };
 

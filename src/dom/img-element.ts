@@ -37,6 +37,11 @@ const returnVoid = () => {
 };
 const returnUndefined = () => undefined;
 
+/**
+ * Creates IMG element for each file in `files`.
+ * Does nothing if `files` are empty.
+ * @param parameters
+ */
 export const createList = (parameters: {
   files: readonly p5.File[];
   getAlt?: (file: p5.File) => string | undefined;
@@ -45,12 +50,16 @@ export const createList = (parameters: {
   onFailEach?: (file: p5.File, index: number) => void;
   warnOnFail?: boolean;
   onComplete?: (imgList: p5.Element[]) => void;
+  onFailAny?: (files: readonly p5.File[]) => void;
 }) => {
   const { files, hide, warnOnFail } = parameters;
+  if (files.length <= 0) return undefined;
+
   const getAlt = parameters.getAlt || returnUndefined;
   const onLoadEach = parameters.onLoadEach || returnVoid;
   const onFailEach = parameters.onFailEach || returnVoid;
   const onComplete = parameters.onComplete || returnVoid;
+  let onFailAny = parameters.onFailAny || returnVoid;
   const fileCount = files.length;
 
   const loadedImages: p5.Element[] = [];
@@ -66,7 +75,11 @@ export const createList = (parameters: {
         loadedImages.push(img);
         if (loadedImages.length === fileCount) onComplete(loadedImages);
       },
-      onFail: file => onFailEach(file, i),
+      onFail: file => {
+        onFailEach(file, i);
+        onFailAny(files);
+        onFailAny = returnVoid;
+      },
       warnOnFail
     });
   }
