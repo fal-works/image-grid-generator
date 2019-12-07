@@ -1,6 +1,7 @@
 import p5 from "p5";
 import { p, setP5Instance } from "./common/shared";
 import { preventDragDrop } from "./common/prevent-drag-drop";
+import { shrinkToBox } from "./common/fit-to-box";
 import { DropZone, Button, ImgElement, Utility as DomUtility } from "./dom";
 import { Settings, ThumbnailArea, ParameterArea, Guide } from "./components";
 import * as ImageGrid from "./image-grid";
@@ -54,17 +55,17 @@ const completeGenerate = (parameters: Parameters.Unit) => (
   }
 
   const grid = ImageGrid.create(imgList, parameters);
-
-  const scaleFactor = Math.min(
-    1,
-    Math.min(p.width / grid.width, p.height / grid.height)
-  );
-  const displayWidth = scaleFactor * grid.width;
-  const displayHeight = scaleFactor * grid.height;
+  const displaySize = shrinkToBox(grid, p);
 
   drawGeneratedGrid = () => {
     p.background(255);
-    p.image(grid, p.width / 2, p.height / 2, displayWidth, displayHeight);
+    p.image(
+      grid,
+      p.width / 2,
+      p.height / 2,
+      displaySize.width,
+      displaySize.height
+    );
   };
 
   drawGeneratedGrid();

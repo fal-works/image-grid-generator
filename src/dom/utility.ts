@@ -1,5 +1,6 @@
 import p5 from "p5";
 import { Position, RectangleSize } from "../common/types";
+import { fitToBox as fitSize } from "../common/fit-to-box";
 
 export const getSize = (element: p5.Element) =>
   element.size() as {
@@ -8,9 +9,8 @@ export const getSize = (element: p5.Element) =>
   };
 
 export const fitToBox = (element: p5.Element, boxSize: RectangleSize) => {
-  const { width, height } = getSize(element);
-  const scaleFactor = Math.min(boxSize.width / width, boxSize.height / height);
-  element.size(width * scaleFactor, height * scaleFactor);
+  const newSize = fitSize(getSize(element), boxSize);
+  element.size(newSize.width, newSize.height);
 };
 
 type PositionType = "static" | "absolute" | "relative" | "fixed";

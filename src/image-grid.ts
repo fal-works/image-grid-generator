@@ -1,5 +1,7 @@
 import p5 from "p5";
 import { p } from "./common/shared";
+import { fitToBox } from "./common/fit-to-box";
+import { RectangleSize } from "./common/types";
 import * as Parameters from "./parameters";
 
 export const create = (
@@ -45,19 +47,11 @@ export const create = (
       if (imageIndex >= imageCount) break;
 
       const image = images[imageIndex++];
-      const imageWidth = (image as any).width as number;
-      const imageHeight = (image as any).height as number;
-      const scaleFactor = Math.min(
-        cellWidth / imageWidth,
-        cellHeight / imageHeight
-      );
-      graphics.image(
-        image,
-        x,
-        y,
-        scaleFactor * imageWidth,
-        scaleFactor * imageHeight
-      );
+      const displaySize = fitToBox((image as any) as RectangleSize, {
+        width: cellWidth,
+        height: cellHeight
+      });
+      graphics.image(image, x, y, displaySize.width, displaySize.height);
     }
   }
 
