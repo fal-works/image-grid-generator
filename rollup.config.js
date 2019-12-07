@@ -3,7 +3,7 @@ import cleanup from "rollup-plugin-cleanup";
 
 // ---- settings ------------
 
-const version = "0.1.0";
+const version = "1.0.0";
 const cleanBuild = false;
 
 // --------------------------
