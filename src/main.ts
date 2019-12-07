@@ -135,7 +135,7 @@ const setupButtons = () => {
     position: Settings.generateButtonPosition,
     size: Settings.generateButtonSize,
     cursor: "pointer"
-  }).style("font-size", "large");
+  });
 
   saveButton = Button.create({
     label: "save",
@@ -143,7 +143,7 @@ const setupButtons = () => {
     position: Settings.saveButtonPosition,
     size: Settings.saveButtonSize,
     cursor: "pointer"
-  }).style("font-size", "large");
+  });
 };
 
 const setupParameterArea = () => {

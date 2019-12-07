@@ -22,6 +22,7 @@ h1 {
 button {
     font-family: inherit;
     font-weight: bold;
+    font-size: large;
     background: #f8f8f8;
     color: #404040;
     border: none;
