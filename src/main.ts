@@ -75,7 +75,6 @@ const startGenerate = () => {
   const cellCount = parameters.rows * parameters.columns;
   if (cellCount < 1) return;
 
-  processing = true;
   startProcessing();
 
   const files: p5.File[] = p.shuffle(imageFiles).slice(0, cellCount);
