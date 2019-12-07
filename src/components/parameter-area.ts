@@ -1,7 +1,7 @@
 import p5 from "p5";
-import * as TextArea from "./dom/text-area";
+import * as TextArea from "../dom/text-area";
 import * as Settings from "./settings";
-import * as Parameters from "./parameters";
+import * as Parameters from "../parameters";
 
 export interface Unit {
   readonly element: p5.Element;

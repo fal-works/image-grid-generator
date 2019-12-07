@@ -1,7 +1,7 @@
 import p5 from "p5";
-import { Position, RectangleSize } from "./types";
-import * as DomUtility from "./dom/utility";
-import * as ImgElement from "./dom/img-element";
+import { Position, RectangleSize } from "../types";
+import * as DomUtility from "../dom/utility";
+import * as ImgElement from "../dom/img-element";
 
 export interface Unit {
   readonly position: Position;

@@ -1,4 +1,4 @@
-import { Position, RectangleSize } from "./types";
+import { Position, RectangleSize } from "../types";
 
 const wholeSize: RectangleSize = {
   width: 1280,

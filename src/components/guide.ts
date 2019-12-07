@@ -1,5 +1,5 @@
-import { p } from "./shared";
-import * as Parameters from "./parameters";
+import { p } from "../shared";
+import * as Parameters from "../parameters";
 
 export const draw = (parameters: Parameters.Unit) => {
   const { width, height, columns, rows, innerMargin } = parameters;

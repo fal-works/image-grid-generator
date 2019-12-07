@@ -1,15 +1,9 @@
 import p5 from "p5";
 import { p, setP5Instance } from "./shared";
-import * as DropZone from "./dom/drop-zone";
-import * as Button from "./dom/button";
-import * as ImgElement from "./dom/img-element";
-import { setPosition } from "./dom/utility";
-import * as Settings from "./settings";
-import * as ThumbnailArea from "./thumbnail-area";
-import * as ParameterArea from "./parameter-area";
+import { DropZone, Button, ImgElement, Utility as DomUtility } from "./dom";
+import { Settings, ThumbnailArea, ParameterArea, Guide } from "./components";
 import * as ImageGrid from "./image-grid";
 import * as Parameters from "./parameters";
-import * as Guide from "./guide";
 
 // ---- variables -------------------------------------------------------------
 
@@ -164,7 +158,7 @@ const setupParameterArea = () => {
 const setup = () => {
   const { width, height } = Settings.canvasSize;
   const canvas = p.createCanvas(width, height);
-  setPosition(canvas, Settings.canvasPosition);
+  DomUtility.setPosition(canvas, Settings.canvasPosition);
 
   p.imageMode(p.CENTER);
 
