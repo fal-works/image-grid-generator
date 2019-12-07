@@ -10,7 +10,7 @@ const cleanBuild = false;
 
 const bannerComment = `/**
  * Image Grid Generator.
- * @copyright FAL
+ * @copyright 2019 FAL
  * @version ${version}
  */
 `;
