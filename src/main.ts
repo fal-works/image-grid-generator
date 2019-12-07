@@ -16,7 +16,11 @@ import * as Guide from "./guide";
 const imageFiles: p5.File[] = [];
 
 let gridImage: p5.Graphics | undefined = undefined;
+
 let parameterArea: ParameterArea.Unit;
+let generateButton: p5.Element;
+let saveButton: p5.Element;
+
 let processing = false;
 let drawGeneratedGrid = () => {
   p.background(255);
@@ -33,11 +37,17 @@ let drawGeneratedGrid = () => {
 const startProcessing = () => {
   processing = true;
   p.cursor(p.WAIT);
+
+  generateButton.style("cursor", "wait");
+  saveButton.style("cursor", "wait");
 };
 
 const endProcessing = () => {
   processing = false;
   p.cursor(p.ARROW);
+
+  generateButton.style("cursor", "pointer");
+  saveButton.style("cursor", "pointer");
 };
 
 const completeGenerate = (parameters: Parameters.Unit) => (
@@ -119,18 +129,20 @@ const setupDropZone = () => {
 };
 
 const setupButtons = () => {
-  Button.create({
+  generateButton = Button.create({
     label: "generate",
     onClick: startGenerate,
     position: Settings.generateButtonPosition,
-    size: Settings.generateButtonSize
+    size: Settings.generateButtonSize,
+    cursor: "pointer"
   }).style("font-size", "large");
 
-  Button.create({
+  saveButton = Button.create({
     label: "save",
     onClick: saveResult,
     position: Settings.saveButtonPosition,
-    size: Settings.saveButtonSize
+    size: Settings.saveButtonSize,
+    cursor: "pointer"
   }).style("font-size", "large");
 };
 
