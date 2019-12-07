@@ -15,7 +15,7 @@ import * as Guide from "./guide";
 
 const imageFiles: p5.File[] = [];
 
-let gridImage: p5.Graphics | undefined = undefined;
+let imageGridGraphics: p5.Graphics | undefined = undefined;
 
 let parameterArea: ParameterArea.Unit;
 let generateButton: p5.Element;
@@ -74,7 +74,7 @@ const completeGenerate = (parameters: Parameters.Unit) => (
 
   drawGeneratedGrid();
 
-  gridImage = grid;
+  imageGridGraphics = grid;
   endProcessing();
 };
 
@@ -100,9 +100,9 @@ const startGenerate = () => {
 };
 
 const saveResult = () => {
-  if (!gridImage) return;
+  if (!imageGridGraphics) return;
 
-  p.save(gridImage, parameterArea.parameters.fileName);
+  p.save(imageGridGraphics, parameterArea.parameters.fileName);
 };
 
 // ---- setup -----------------------------------------------------------------
