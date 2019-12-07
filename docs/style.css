@@ -82,11 +82,11 @@ textarea:focus {
     font-size: small;
 }
 
-.titleContainer {
+.title-container {
     float: left
 }
 
-.logoContainer {
+.logo-container {
     text-align: right;
 }
 
@@ -98,7 +98,7 @@ textarea:focus {
     height: 40px;
 }
 
-.underTitle {
+.under-title {
     height: 15px;
 }
 
