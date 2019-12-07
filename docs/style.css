@@ -1,10 +1,29 @@
+html {
+    height: 100%;
+}
+
 body {
+    position: relative;
     width: 1035px;
-    margin-top: 15px;
+    height: 100%;
+    margin: 0;
     margin-right: auto;
     margin-left: auto;
     padding: 0;
     font-family: Montserrat;
+}
+
+.whole-content {
+    position: absolute;
+    width: 1035px;
+    height: 100%;
+    max-height: 800px;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0;
 }
 
 h1 {
