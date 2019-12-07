@@ -1,8 +1,8 @@
 import { Position, RectangleSize } from "../common/types";
 
 const wholeSize: RectangleSize = {
-  width: 1280,
-  height: 800
+  width: 1035,
+  height: 640
 };
 
 export const leftZonePosition: Position = {
@@ -17,7 +17,7 @@ export const leftZoneSize: RectangleSize = {
 
 const leftZoneRightPadding = 20;
 
-const leftZoneInterval = 20;
+const leftZoneInterval = 15;
 
 // -- drop zone ----
 
@@ -28,7 +28,7 @@ export const dropZonePosition: Position = {
 
 export const dropZoneSize: RectangleSize = {
   width: leftZoneSize.width - leftZoneRightPadding,
-  height: 420
+  height: 280
 };
 
 const thumnailAreaMargin = 1;
