@@ -1,6 +1,6 @@
 body {
     width: 1280px;
-    margin-top: 10px;
+    margin-top: 15px;
     margin-right: auto;
     margin-left: auto;
     padding: 0;
@@ -76,5 +76,5 @@ textarea:focus {
 }
 
 .underTitle {
-    height: 10px;
+    height: 15px;
 }
