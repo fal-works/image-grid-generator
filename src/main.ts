@@ -1,10 +1,10 @@
 import p5 from "p5";
-import { p, setP5Instance } from "./shared";
+import { p, setP5Instance } from "./common/shared";
+import { preventDragDrop } from "./common/prevent-drag-drop";
 import { DropZone, Button, ImgElement, Utility as DomUtility } from "./dom";
 import { Settings, ThumbnailArea, ParameterArea, Guide } from "./components";
 import * as ImageGrid from "./image-grid";
 import * as Parameters from "./parameters";
-import { preventDragDrop } from "./prevent-drag-drop";
 
 // ---- variables -------------------------------------------------------------
 

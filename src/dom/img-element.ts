@@ -1,5 +1,5 @@
 import p5 from "p5";
-import { p } from "../shared";
+import { p } from "../common/shared";
 
 export const create = (parameters: {
   file: p5.File;

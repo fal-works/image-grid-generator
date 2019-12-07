@@ -1,5 +1,5 @@
 import p5 from "p5";
-import { Position, RectangleSize } from "../types";
+import { Position, RectangleSize } from "../common/types";
 import * as DomUtility from "../dom/utility";
 import * as ImgElement from "../dom/img-element";
 

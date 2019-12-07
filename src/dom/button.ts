@@ -1,4 +1,4 @@
-import { p } from "../shared";
+import { p } from "../common/shared";
 import { setPosition } from "./utility";
 
 export const create = (parameters: {

@@ -1,6 +1,6 @@
 import p5 from "p5";
-import { p } from "../shared";
-import { Position, RectangleSize } from "../types";
+import { p } from "../common/shared";
+import { Position, RectangleSize } from "../common/types";
 import { setPosition } from "./utility";
 
 export const create = (parameters: {

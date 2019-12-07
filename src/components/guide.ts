@@ -1,4 +1,4 @@
-import { p } from "../shared";
+import { p } from "../common/shared";
 import * as Parameters from "../parameters";
 
 export const draw = (parameters: Parameters.Unit) => {

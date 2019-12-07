@@ -1,5 +1,5 @@
 import p5 from "p5";
-import { Position, RectangleSize } from "../types";
+import { Position, RectangleSize } from "../common/types";
 
 export const getSize = (element: p5.Element) =>
   element.size() as {
