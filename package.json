@@ -1,6 +1,6 @@
 {
-  "name": "image-grid",
-  "description": "none",
+  "name": "image-grid-generator",
+  "description": "Combines multiple image files into one.",
   "version": "1.0.2",
   "author": "FAL",
   "dependencies": {
@@ -25,6 +25,7 @@
     "*.min.js"
   ],
   "license": "MIT",
+  "main": "./docs/main.min.js",
   "private": true,
   "scripts": {
     "build": "run-s rollup format minify",
