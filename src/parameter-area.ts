@@ -64,9 +64,5 @@ export const create = (listners: {
     onMouseLeave.bind(undefined, unit)
   );
 
-  return {
-    element,
-    contentText: Parameters.defaultString,
-    parameters: Parameters.defaultValues
-  };
+  return unit;
 };
