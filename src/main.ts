@@ -16,6 +16,7 @@ import * as Guide from "./guide";
 const imageFiles: p5.File[] = [];
 
 let gridImage: p5.Graphics | undefined = undefined;
+let currentParameters = Parameters.defaultValues;
 let parameterArea: p5.Element;
 let guideMode = false;
 let processing = false;
@@ -30,6 +31,9 @@ let drawGeneratedGrid = () => {
 };
 
 // ---- functions -------------------------------------------------------------
+
+const updateParameters = (parameterText: string) =>
+  (currentParameters = Parameters.parse(parameterText));
 
 const startProcessing = () => {
   processing = true;
@@ -72,7 +76,7 @@ const completeGenerate = (parameters: Parameters.Unit) => (
 const startGenerate = () => {
   if (processing) return;
 
-  const parameters = Parameters.parse(parameterArea.value().toString());
+  const parameters = updateParameters(parameterArea.value().toString());
   const cellCount = parameters.rows * parameters.columns;
   if (cellCount < 1) return;
 
@@ -92,7 +96,7 @@ const startGenerate = () => {
 const saveResult = () => {
   if (!gridImage) return;
 
-  p.save(gridImage, `grid-image.png`);
+  p.save(gridImage, currentParameters.fileName);
 };
 
 // ---- setup -----------------------------------------------------------------
@@ -143,7 +147,7 @@ const setupParameterArea = () => {
 
   parameterArea.elt.addEventListener("mouseenter", () => {
     guideMode = true;
-    Guide.draw(Parameters.parse(parameterArea.value().toString()));
+    Guide.draw(currentParameters);
   });
   parameterArea.elt.addEventListener("mouseleave", () => {
     guideMode = false;
@@ -158,7 +162,7 @@ const setupParameterArea = () => {
     if (currentValue === parameterAreaValue) return;
 
     drawGeneratedGrid();
-    Guide.draw(Parameters.parse(currentValue));
+    Guide.draw(updateParameters(currentValue));
 
     parameterAreaValue = currentValue;
   }, 100);

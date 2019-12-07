@@ -13,6 +13,7 @@ export type Unit = {
   readonly outerMargin: OuterMargin;
   readonly innerMargin: number;
   readonly backgroundColorCode: string;
+  readonly fileName: string;
 };
 
 export const defaultValues: Unit = {
@@ -27,7 +28,8 @@ export const defaultValues: Unit = {
     right: 0
   },
   innerMargin: 0,
-  backgroundColorCode: "#FFFFFF00"
+  backgroundColorCode: "#FFFFFF00",
+  fileName: "image-grid.png"
 };
 
 export const stringify = (parameters: Unit) =>
@@ -46,8 +48,12 @@ const reviver = (key: string, value: any) =>
 const validateNumber = (value: any, defaultValue: number): number =>
   Number.isFinite(value) && value < 10000 ? value : defaultValue;
 
-const validateString = (value: any, defaultValue: string): string =>
-  typeof value === "string" ? value : defaultValue;
+const validateString = (
+  value: any,
+  defaultValue: string,
+  maxLength = 100
+): string =>
+  typeof value === "string" && value.length <= maxLength ? value : defaultValue;
 
 const validateOuterMargin = (parsed: any): OuterMargin => {
   const defaultMargin = defaultValues.outerMargin;
@@ -89,6 +95,8 @@ const validate = (parsed: any): Unit => {
     defaultValues.backgroundColorCode
   );
 
+  const fileName = validateString(parsed.fileName, defaultValues.fileName);
+
   return {
     width,
     height,
@@ -96,7 +104,8 @@ const validate = (parsed: any): Unit => {
     rows,
     outerMargin,
     innerMargin,
-    backgroundColorCode
+    backgroundColorCode,
+    fileName
   };
 };
 
