@@ -1,6 +1,7 @@
 import p5 from "p5";
 import { p, setP5Instance } from "./common/shared";
 import { preventDragDrop } from "./common/prevent-drag-drop";
+import * as Browser from "./common/browser";
 import { shrinkToBox } from "./common/fit-to-box";
 import { DropZone, Button, ImgElement, Utility as DomUtility } from "./dom";
 import { Settings, ThumbnailArea, ParameterArea, Guide } from "./components";
@@ -157,7 +158,26 @@ const setupParameterArea = () => {
   });
 };
 
+const verifyBrowser = () => {
+  const type = Browser.determine();
+
+  switch (type) {
+    case Browser.Type.IE:
+      p.createP("Internet Explorer is not supported.");
+      p.createP("Please use another browser.");
+      return false;
+    case Browser.Type.Edge:
+      p.createP("Microsoft Edge is not supported.");
+      p.createP("Please use another browser.");
+      return false;
+    default:
+      return true;
+  }
+};
+
 const setup = () => {
+  if (!verifyBrowser()) return;
+
   const { width, height } = Settings.canvasSize;
   const canvas = p.createCanvas(width, height);
   DomUtility.setPosition(canvas, Settings.canvasPosition);
