@@ -31,7 +31,7 @@ export const dropZoneSize: RectangleSize = {
   height: 280
 };
 
-const thumnailAreaMargin = 1;
+const thumnailAreaMargin = 2;
 
 export const thumbnailAreaPosition: Position = {
   x: dropZonePosition.x + thumnailAreaMargin,
