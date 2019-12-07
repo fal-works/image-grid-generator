@@ -30,7 +30,7 @@ export const draw = (parameters: Parameters.Unit) => {
     contentHeight - 2
   );
 
-  if (innerMargin <= 0) {
+  if (innerMargin === 0) {
     for (let i = 1, x = contentLeftX; i < columns; i += 1) {
       x += columnWidth;
       p.line(x, contentTopY, x, contentBottomY);
