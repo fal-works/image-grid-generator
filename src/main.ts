@@ -3,10 +3,10 @@ import { p, setP5Instance } from "./shared";
 import * as DropZone from "./dom/drop-zone";
 import * as Button from "./dom/button";
 import * as ImgElement from "./dom/img-element";
-import * as TextArea from "./dom/text-area";
 import { setPosition } from "./dom/utility";
 import * as Settings from "./settings";
 import * as ThumbnailArea from "./thumbnail-area";
+import * as ParameterArea from "./parameter-area";
 import * as ImageGrid from "./image-grid";
 import * as Parameters from "./parameters";
 import * as Guide from "./guide";
@@ -16,9 +16,7 @@ import * as Guide from "./guide";
 const imageFiles: p5.File[] = [];
 
 let gridImage: p5.Graphics | undefined = undefined;
-let currentParameters = Parameters.defaultValues;
-let parameterArea: p5.Element;
-let guideMode = false;
+let parameterArea: ParameterArea.Unit;
 let processing = false;
 let drawGeneratedGrid = () => {
   p.background(255);
@@ -31,9 +29,6 @@ let drawGeneratedGrid = () => {
 };
 
 // ---- functions -------------------------------------------------------------
-
-const updateParameters = (parameterText: string) =>
-  (currentParameters = Parameters.parse(parameterText));
 
 const startProcessing = () => {
   processing = true;
@@ -76,7 +71,7 @@ const completeGenerate = (parameters: Parameters.Unit) => (
 const startGenerate = () => {
   if (processing) return;
 
-  const parameters = updateParameters(parameterArea.value().toString());
+  const { parameters } = parameterArea;
   const cellCount = parameters.rows * parameters.columns;
   if (cellCount < 1) return;
 
@@ -96,7 +91,7 @@ const startGenerate = () => {
 const saveResult = () => {
   if (!gridImage) return;
 
-  p.save(gridImage, currentParameters.fileName);
+  p.save(gridImage, parameterArea.parameters.fileName);
 };
 
 // ---- setup -----------------------------------------------------------------
@@ -139,33 +134,18 @@ const setupButtons = () => {
 };
 
 const setupParameterArea = () => {
-  parameterArea = TextArea.create({
-    position: Settings.parameterAreaPosition,
-    size: Settings.parameterAreaSize,
-    initialValue: Parameters.defaultString
+  parameterArea = ParameterArea.create({
+    onMouseEnter: area => {
+      Guide.draw(area.parameters);
+    },
+    onMouseLeave: () => {
+      drawGeneratedGrid();
+    },
+    onChange: area => {
+      drawGeneratedGrid();
+      Guide.draw(area.parameters);
+    }
   });
-
-  parameterArea.elt.addEventListener("mouseenter", () => {
-    guideMode = true;
-    Guide.draw(currentParameters);
-  });
-  parameterArea.elt.addEventListener("mouseleave", () => {
-    guideMode = false;
-    drawGeneratedGrid();
-  });
-
-  let parameterAreaValue = Parameters.defaultString;
-  setInterval(() => {
-    if (!guideMode) return;
-
-    const currentValue = parameterArea.value().toString();
-    if (currentValue === parameterAreaValue) return;
-
-    drawGeneratedGrid();
-    Guide.draw(updateParameters(currentValue));
-
-    parameterAreaValue = currentValue;
-  }, 100);
 };
 
 const setup = () => {
