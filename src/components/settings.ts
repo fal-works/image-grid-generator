@@ -31,16 +31,16 @@ export const dropZoneSize: RectangleSize = {
   height: 280
 };
 
-const thumnailAreaMargin = 2;
+const thumbnailAreaMargin = 2;
 
 export const thumbnailAreaPosition: Position = {
-  x: dropZonePosition.x + thumnailAreaMargin,
-  y: dropZonePosition.y + thumnailAreaMargin
+  x: dropZonePosition.x + thumbnailAreaMargin,
+  y: dropZonePosition.y + thumbnailAreaMargin
 };
 
 export const thumbnailAreaSize: RectangleSize = {
-  width: dropZoneSize.width - 2 * thumnailAreaMargin,
-  height: dropZoneSize.height - 2 * thumnailAreaMargin
+  width: dropZoneSize.width - 2 * thumbnailAreaMargin,
+  height: dropZoneSize.height - 2 * thumbnailAreaMargin
 };
 
 // -- buttons ----
