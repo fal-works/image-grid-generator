@@ -1,5 +1,6 @@
 import { p } from "../common/shared";
 import * as Parameters from "../parameters";
+import { getScaleFactorToShrink } from "../common/fit-to-box";
 
 export const draw = (parameters: Parameters.Unit) => {
   const { width, height, columns, rows, innerMargin } = parameters;
@@ -18,7 +19,11 @@ export const draw = (parameters: Parameters.Unit) => {
   } = Parameters.calculate(parameters);
 
   p.push();
-  p.translate((p.width - width) / 2, (p.height - height) / 2);
+  p.translate(p.width / 2, p.height / 2);
+  const scaleFactor = getScaleFactorToShrink(parameters, p);
+  p.scale(scaleFactor);
+  p.strokeWeight(1 / scaleFactor);
+  p.translate(-width / 2, -height / 2);
   p.stroke(255, 64, 128);
   p.noFill();
 

@@ -1,33 +1,44 @@
 import { RectangleSize } from "./types";
 
-export const fitToBox = (
+export const getScaleFactorToFit = (
   contentSize: RectangleSize,
   containerSize: RectangleSize
 ) => {
   const { width, height } = contentSize;
-  const scaleFactor = Math.min(
-    containerSize.width / width,
-    containerSize.height / height
-  );
+  return Math.min(containerSize.width / width, containerSize.height / height);
+};
+
+export const fitToBox = (
+  contentSize: RectangleSize,
+  containerSize: RectangleSize
+) => {
+  const scaleFactor = getScaleFactorToFit(contentSize, containerSize);
 
   return {
-    width: width * scaleFactor,
-    height: height * scaleFactor
+    width: contentSize.width * scaleFactor,
+    height: contentSize.height * scaleFactor
   };
+};
+
+export const getScaleFactorToShrink = (
+  contentSize: RectangleSize,
+  containerSize: RectangleSize
+) => {
+  const { width, height } = contentSize;
+  return Math.min(
+    1,
+    Math.min(containerSize.width / width, containerSize.height / height)
+  );
 };
 
 export const shrinkToBox = (
   contentSize: RectangleSize,
   containerSize: RectangleSize
 ) => {
-  const { width, height } = contentSize;
-  const scaleFactor = Math.min(
-    1,
-    Math.min(containerSize.width / width, containerSize.height / height)
-  );
+  const scaleFactor = getScaleFactorToShrink(contentSize, containerSize);
 
   return {
-    width: width * scaleFactor,
-    height: height * scaleFactor
+    width: contentSize.width * scaleFactor,
+    height: contentSize.height * scaleFactor
   };
 };
