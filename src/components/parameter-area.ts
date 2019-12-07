@@ -10,16 +10,28 @@ export interface Unit {
   monitorIntervalId?: NodeJS.Timeout;
 }
 
-const returnVoid = () => {};
+type Listeners = {
+  onChange: (area: Unit) => void;
+  onMouseEnter: (area: Unit) => void;
+  onMouseLeave: (area: Unit) => void;
+};
 
-export const create = (listners: {
+const returnVoid = () => {};
+const defaultListeners: Listeners = {
+  onChange: returnVoid,
+  onMouseEnter: returnVoid,
+  onMouseLeave: returnVoid
+};
+
+export const create = (listeners: {
   onChange?: (area: Unit) => void;
   onMouseEnter?: (area: Unit) => void;
   onMouseLeave?: (area: Unit) => void;
 }): Unit => {
-  const onChange = listners.onChange || returnVoid;
-  const onMouseEnter = listners.onMouseEnter || returnVoid;
-  const onMouseLeave = listners.onMouseLeave || returnVoid;
+  const { onChange, onMouseEnter, onMouseLeave } = Object.assign(
+    Object.create(defaultListeners),
+    listeners
+  );
 
   const element = TextArea.create({
     position: Settings.parameterAreaPosition,
