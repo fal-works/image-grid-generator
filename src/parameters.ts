@@ -45,8 +45,12 @@ const reviver = (key: string, value: any) =>
     ? value
     : undefined;
 
-const validateNumber = (value: any, defaultValue: number): number =>
-  Number.isFinite(value) && value < 10000 ? value : defaultValue;
+const validateNumber = (
+  value: any,
+  defaultValue: number,
+  maxValue = 10000
+): number =>
+  Number.isFinite(value) && value < maxValue ? value : defaultValue;
 
 const validateString = (
   value: any,
