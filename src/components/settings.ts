@@ -73,6 +73,9 @@ export const saveButtonSize: RectangleSize = {
 
 // -- parameter area ----
 
+const parameterAreaInnerMargin = 5;
+const parameterAreaOptionHeight = 30;
+
 export const parameterAreaPosition: Position = {
   x: leftZonePosition.x,
   y: generateButtonPosition.y + buttonHeight + leftZoneInterval
@@ -82,7 +85,33 @@ export const parameterAreaSize: RectangleSize = {
   width: leftZoneSize.width - leftZoneRightPadding,
   height:
     leftZoneSize.height -
-    (dropZoneSize.height + leftZoneInterval + buttonHeight + leftZoneInterval)
+    (dropZoneSize.height +
+      leftZoneInterval +
+      buttonHeight +
+      leftZoneInterval +
+      parameterAreaInnerMargin +
+      parameterAreaOptionHeight)
+};
+
+export const modeSelectPositon: Position = {
+  x: leftZonePosition.x,
+  y: leftZoneSize.height - parameterAreaOptionHeight
+};
+
+export const modeSelectSize: RectangleSize = {
+  width: 70,
+  height: parameterAreaOptionHeight
+};
+
+export const resetParametersButtonSize: RectangleSize = {
+  width: 60,
+  height: parameterAreaOptionHeight
+};
+
+export const resetParametersButtonPositon: Position = {
+  x:
+    leftZoneSize.width - leftZoneRightPadding - resetParametersButtonSize.width,
+  y: modeSelectPositon.y
 };
 
 // -- canvas ----

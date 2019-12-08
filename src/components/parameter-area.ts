@@ -1,5 +1,7 @@
 import p5 from "p5";
+import { p } from "../common/shared";
 import * as TextArea from "../dom/text-area";
+import * as Button from "../dom/button";
 import * as Settings from "./settings";
 import * as Parameters from "../parameters";
 
@@ -39,7 +41,7 @@ export const create = (listeners: {
     initialValue: Parameters.defaultString
   });
 
-  const unit: Unit = {
+  const area: Unit = {
     element,
     contentText: Parameters.defaultString,
     parameters: Parameters.defaultValues,
@@ -48,35 +50,72 @@ export const create = (listeners: {
 
   const monitorChange = () => {
     const currentText = element.value().toString();
-    if (currentText === unit.contentText) return;
+    if (currentText === area.contentText) return;
 
-    unit.contentText = currentText;
-    unit.parameters = Parameters.parse(currentText);
+    area.contentText = currentText;
+    area.parameters = Parameters.parse(currentText);
 
-    onChange(unit);
+    onChange(area);
   };
 
-  const inputElement = element.elt as HTMLInputElement;
+  const setText = (text: string) => {
+    area.element.value(text);
+    monitorChange();
+  };
+  const setYamlTextFrom = (parameters: Parameters.Unit) =>
+    setText(Parameters.toYamlString(parameters));
+  const setJsonTextFrom = (parameters: Parameters.Unit) =>
+    setText(Parameters.toJsonString(parameters));
 
-  inputElement.addEventListener("focus", () => {
-    unit.monitorIntervalId = setInterval(monitorChange, 100);
+  const htmlElement = element.elt as HTMLInputElement;
+
+  htmlElement.addEventListener("focus", () => {
+    area.monitorIntervalId = setInterval(monitorChange, 100);
   });
-  inputElement.addEventListener("blur", () => {
-    const { monitorIntervalId } = unit;
+  htmlElement.addEventListener("blur", () => {
+    const { monitorIntervalId } = area;
     if (monitorIntervalId) {
       clearInterval(monitorIntervalId);
-      unit.monitorIntervalId = undefined;
+      area.monitorIntervalId = undefined;
     }
   });
 
-  inputElement.addEventListener(
+  htmlElement.addEventListener(
     "mouseenter",
-    onMouseEnter.bind(undefined, unit)
+    onMouseEnter.bind(undefined, area)
   );
-  inputElement.addEventListener(
+  htmlElement.addEventListener(
     "mouseleave",
-    onMouseLeave.bind(undefined, unit)
+    onMouseLeave.bind(undefined, area)
   );
 
-  return unit;
+  const select = p.createSelect();
+  select.position(Settings.modeSelectPositon.x, Settings.modeSelectPositon.y);
+  select.size(Settings.modeSelectSize.width, Settings.modeSelectSize.height);
+  (select as any).option("YAML");
+  (select as any).option("JSON");
+  (select as any).changed(() => {
+    switch (select.value().toString()) {
+      case "YAML":
+        setYamlTextFrom(area.parameters);
+        break;
+      case "JSON":
+        setJsonTextFrom(area.parameters);
+        break;
+    }
+  });
+
+  const resetButton = Button.create({
+    label: "reset",
+    onClick: () => {
+      setText(Parameters.defaultString);
+      select.value("YAML");
+    },
+    position: Settings.resetParametersButtonPositon,
+    size: Settings.resetParametersButtonSize,
+    cursor: "pointer"
+  });
+  resetButton.style("font-size", "medium");
+
+  return area;
 };
