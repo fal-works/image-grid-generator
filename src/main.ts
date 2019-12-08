@@ -51,7 +51,6 @@ const completeGenerate = (parameters: Parameters.Unit) => (
   imgList: readonly p5.Element[]
 ) => {
   if (imgList.length <= 0) {
-    endProcessing();
     return;
   }
 
@@ -72,7 +71,6 @@ const completeGenerate = (parameters: Parameters.Unit) => (
   drawGeneratedGrid();
 
   imageGridGraphics = grid;
-  endProcessing();
 };
 
 const startGenerate = () => {
@@ -87,12 +85,11 @@ const startGenerate = () => {
 
   startProcessing();
 
-  ImgElement.createList({
-    files,
+  ImgElement.createList(files, {
     hide: true,
     warnOnFail: true,
-    onComplete: completeGenerate(parameters),
-    onFailAny: endProcessing
+    onSuccess: completeGenerate(parameters),
+    onEnd: endProcessing
   });
 };
 

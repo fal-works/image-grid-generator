@@ -37,32 +37,59 @@ const returnVoid = () => {
 };
 const returnUndefined = () => undefined;
 
+type ListParameters = {
+  getAlt: (file: p5.File) => string | undefined;
+  hide: boolean;
+  onLoadEach: (img: p5.Element, file: p5.File, index: number) => void;
+  onFailEach: (file: p5.File, index: number) => void;
+  warnOnFail: boolean;
+  onEnd: (files: readonly p5.File[]) => void;
+  onSuccess: (imgList: p5.Element[]) => void;
+  onFailAny: (files: readonly p5.File[]) => void;
+};
+
+const defaultListParameters: ListParameters = {
+  getAlt: returnUndefined,
+  hide: false,
+  onLoadEach: returnVoid,
+  onFailEach: returnVoid,
+  warnOnFail: true,
+  onSuccess: returnVoid,
+  onFailAny: returnVoid,
+  onEnd: returnVoid
+};
+
 /**
  * Creates IMG element for each file in `files`.
  * Does nothing if `files` are empty.
+ * @param files
  * @param parameters
  */
-export const createList = (parameters: {
-  files: readonly p5.File[];
-  getAlt?: (file: p5.File) => string | undefined;
-  hide?: boolean;
-  onLoadEach?: (img: p5.Element, file: p5.File, index: number) => void;
-  onFailEach?: (file: p5.File, index: number) => void;
-  warnOnFail?: boolean;
-  onComplete?: (imgList: p5.Element[]) => void;
-  onFailAny?: (files: readonly p5.File[]) => void;
-}) => {
-  const { files, hide, warnOnFail } = parameters;
+export const createList = (
+  files: readonly p5.File[],
+  parameters: Partial<ListParameters>
+) => {
   if (files.length <= 0) return undefined;
 
-  const getAlt = parameters.getAlt || returnUndefined;
-  const onLoadEach = parameters.onLoadEach || returnVoid;
-  const onFailEach = parameters.onFailEach || returnVoid;
-  const onComplete = parameters.onComplete || returnVoid;
-  let onFailAny = parameters.onFailAny || returnVoid;
+  const parameterValues = Object.assign(
+    Object.create(defaultListParameters),
+    parameters
+  );
+
+  const {
+    getAlt,
+    hide,
+    onLoadEach,
+    onFailEach,
+    warnOnFail,
+    onSuccess,
+    onEnd
+  } = parameterValues;
+  let onFailAny = parameterValues.onFailAny;
   const fileCount = files.length;
 
   const loadedImages: p5.Element[] = [];
+  let processedCount = 0;
 
   for (let i = 0; i < files.length; i += 1) {
     const file = files[i];
@@ -73,12 +100,16 @@ export const createList = (parameters: {
       onLoad: (img, file) => {
         onLoadEach(img, file, i);
         loadedImages.push(img);
-        if (loadedImages.length === fileCount) onComplete(loadedImages);
+        if (loadedImages.length === fileCount) onSuccess(loadedImages);
+        processedCount += 1;
+        if (processedCount === fileCount) onEnd(files);
       },
       onFail: file => {
         onFailEach(file, i);
         onFailAny(files);
         onFailAny = returnVoid;
+        processedCount += 1;
+        if (processedCount === fileCount) onEnd(files);
       },
       warnOnFail
     });
