@@ -1,7 +1,7 @@
 {
   "name": "image-grid-generator",
   "description": "Combines multiple image files into one.",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "author": "FAL",
   "dependencies": {
     "js-yaml": "^3.13.1",
