@@ -25,12 +25,13 @@ export const create = (parameters: {
 
   dropZone.addClass("drop-zone");
 
+  const divElement: HTMLDivElement = dropZone.elt;
   dropZone
     .dragOver(onDragOver)
     .dragLeave(onDragLeave)
     .drop(onDrop, () => {
       onDragLeave();
-      dropZone.elt.innerHTML = "";
+      divElement.innerHTML = "";
     });
 
   onDragLeave();

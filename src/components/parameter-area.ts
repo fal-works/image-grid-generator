@@ -56,10 +56,12 @@ export const create = (listeners: {
     onChange(unit);
   };
 
-  element.elt.addEventListener("focus", () => {
+  const inputElement = element.elt as HTMLInputElement;
+
+  inputElement.addEventListener("focus", () => {
     unit.monitorIntervalId = setInterval(monitorChange, 100);
   });
-  element.elt.addEventListener("blur", () => {
+  inputElement.addEventListener("blur", () => {
     const { monitorIntervalId } = unit;
     if (monitorIntervalId) {
       clearInterval(monitorIntervalId);
@@ -67,11 +69,11 @@ export const create = (listeners: {
     }
   });
 
-  element.elt.addEventListener(
+  inputElement.addEventListener(
     "mouseenter",
     onMouseEnter.bind(undefined, unit)
   );
-  element.elt.addEventListener(
+  inputElement.addEventListener(
     "mouseleave",
     onMouseLeave.bind(undefined, unit)
   );

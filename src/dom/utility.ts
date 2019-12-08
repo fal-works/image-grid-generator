@@ -26,7 +26,8 @@ export const setPosition = (
   position: Position,
   type: PositionType = positionTypes.absolute
 ) => {
-  const style = element.elt.style;
+  const htmlElement: HTMLElement = element.elt;
+  const style = htmlElement.style;
   const { x, y } = position;
 
   style.position = type;
