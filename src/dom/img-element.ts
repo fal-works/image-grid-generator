@@ -60,8 +60,8 @@ const defaultListParameters: ListParameters = {
 };
 
 /**
- * Creates IMG element for each file in `files`.
- * Does nothing if `files` are empty.
+ * Creates IMG element for each file in `files` asynchronously.
+ * If `files` are empty, calls `onEnd` (if specified) immediately.
  * @param files
  * @param parameters
  */
@@ -69,7 +69,10 @@ export const createList = (
   files: readonly p5.File[],
   parameters: Partial<ListParameters>
 ) => {
-  if (files.length <= 0) return undefined;
+  if (files.length <= 0) {
+    if (parameters.onEnd) parameters.onEnd(files);
+    return undefined;
+  }
 
   const parameterValues = Object.assign(
     Object.create(defaultListParameters),
