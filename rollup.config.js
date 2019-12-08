@@ -16,10 +16,11 @@ const bannerComment = `/**
 `;
 
 const globals = {
-  p5: "p5"
+  p5: "p5",
+  "js-yaml": "jsyaml"
 };
 
-const external = ["p5"];
+const external = ["p5", "js-yaml"];
 
 const typescriptPlugin = typescript({
   useTsconfigDeclarationDir: true,

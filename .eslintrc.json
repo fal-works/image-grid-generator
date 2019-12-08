@@ -15,7 +15,8 @@
     {
       "files": ["build/*.js"],
       "globals": {
-        "p5": "readonly"
+        "p5": "readonly",
+        "jsyaml": "readonly"
       },
       "parserOptions": {
         "sourceType": "script"

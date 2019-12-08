@@ -1,3 +1,5 @@
+import { safeLoad as loadYaml, safeDump as yamlStringify } from "js-yaml";
+
 type OuterMargin = {
   readonly top: number;
   readonly bottom: number;
@@ -32,10 +34,12 @@ export const defaultValues: Unit = {
   fileName: "image-grid.png"
 };
 
-export const stringify = (parameters: Unit) =>
+export const toJsonString = (parameters: Unit) =>
   JSON.stringify(parameters, undefined, 2);
 
-export const defaultString = stringify(defaultValues);
+export const toYamlString = (parameters: Unit) => yamlStringify(parameters);
+
+export const defaultString = toYamlString(defaultValues);
 
 const reviver = (key: string, value: any) =>
   key === "" ||
@@ -65,6 +69,19 @@ const validateString = (
   const s = value.toString();
   return typeof s === "string" && s.length > 0 && s.length <= maxLength
     ? s
+    : defaultValue;
+};
+
+const hex = "[\\da-fA-F]";
+const colorCodeWithoutPrefixExpression = new RegExp(
+  `^(${hex}{3}|${hex}{4}|${hex}{6}|${hex}{8})$`
+);
+const validateColorCode = (value: any, defaultValue: string): string => {
+  const s = value.toString();
+  return typeof s === "string"
+    ? s.match(colorCodeWithoutPrefixExpression)
+      ? `#${s}`
+      : s
     : defaultValue;
 };
 
@@ -103,12 +120,12 @@ const validate = (parsed: any): Unit => {
     defaultValues.innerMargin
   );
 
-  const backgroundColorCode = validateString(
+  const backgroundColorCode = validateColorCode(
     parsed.backgroundColorCode,
     defaultValues.backgroundColorCode
   );
 
-  const fileName = validateString(parsed.fileName, defaultValues.fileName);
+  const fileName = validateString(parsed.fileName, defaultValues.fileName, 255);
 
   return {
     width,
@@ -122,11 +139,14 @@ const validate = (parsed: any): Unit => {
   };
 };
 
-export const parse = (jsonString: string): Unit => {
-  if (typeof jsonString !== "string") return defaultValues;
+export const parse = (parametersText: string): Unit => {
+  if (typeof parametersText !== "string") return defaultValues;
+  const trimmedText = parametersText.trim();
 
   try {
-    return validate(JSON.parse(jsonString, reviver));
+    if (trimmedText.substr(0, 1) === "{")
+      return validate(JSON.parse(trimmedText, reviver));
+    else return validate(loadYaml(trimmedText));
   } catch (_) {
     return defaultValues;
   }
