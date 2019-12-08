@@ -13,6 +13,12 @@ body {
     font-family: Montserrat;
 }
 
+button, select {
+    font-family: inherit;
+    font-weight: bold;
+    color: #404040;
+}
+
 .whole-content {
     position: absolute;
     width: 1035px;
@@ -43,11 +49,8 @@ h1 {
 }
 
 button {
-    font-family: inherit;
-    font-weight: bold;
     font-size: large;
     background: #f8f8f8;
-    color: #404040;
     border: none;
     box-shadow: 0px 2px 2px #00000060;
 }
@@ -63,8 +66,8 @@ button:focus {
 
 textarea {
     padding: 10px;
-    color: #404040;
-    font-family: Overpass Mono;
+    color: #606060;
+    font-family: 'Consolas', 'Roboto Mono', monospace;
     border: solid;
     border-color: #e0e0e0;
     border-width: 1px;
