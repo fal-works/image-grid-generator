@@ -32,8 +32,37 @@ button, select {
     padding: 0;
 }
 
-h1 {
-    display: inline;
+div.row {
+    margin: 0;
+    display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+div.header-area {
+    margin-bottom: 1rem;
+}
+
+div.title-row {
+    padding-bottom: 4px;
+}
+
+.row-item {
+    margin: 0;
+}
+
+.description {
+    font-size: small;
+    padding: 0 0 4px 16px;
+}
+
+.twitter-share-button {
+    padding: 0 1rem 8px 0;
 }
 
 .main-content {
@@ -76,33 +105,6 @@ textarea {
 
 textarea:focus {
     outline: 0;
-}
-
-.description {
-    display: inline;
-    position: relative;
-    left: 20px;
-    font-size: small;
-}
-
-.title-container {
-    float: left
-}
-
-.logo-container {
-    text-align: right;
-}
-
-.logo {
-    display: inline-block;
-    position: relative;
-    top: 2px;
-    left: 12px;
-    height: 40px;
-}
-
-.under-title {
-    height: 15px;
 }
 
 .footer {

@@ -14,8 +14,10 @@
   <meta property="og:image" content="https://image-grid-generator.com/images/ogp-image.png" />
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js" defer></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.14.0/js-yaml.min.js" defer></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.14.0/js-yaml.min.js"
+    defer></script>
   <script type="text/javascript" src="./main.min.js" defer></script>
+  <script type="text/javascript" src="https://platform.twitter.com/widgets.js" charset="utf-8" defer></script>
 
   <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
@@ -26,23 +28,25 @@
 
 <body>
   <div class="whole-content">
-    <div>
-      <div class="title-container">
-        <h1><a class="title" href="https://image-grid-generator.com">Image Grid Generator</a></h1>
-        <p class="description">Combines multiple image files into one.</p>
+    <div class="row header-area">
+      <div class="row-item row title-row">
+        <h1 class="row-item"><a class="title" href="https://image-grid-generator.com">Image Grid Generator</a></h1>
+        <p class="row-item description">Combines multiple image files into one.</p>
       </div>
-      <div class="logo-container">
+      <div class="row-item row">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="row-item twitter-share-button"
+          data-text="Image Grid Generator: Combines multiple images into one."
+          data-url="https://image-grid-generator.com" data-show-count="false">Tweet</a>
         <a href="https://www.fal-works.com/">
-          <img class="logo" src="./images/fal-works-logo.png" alt="FAL Works">
+          <img class="row-item logo" width="200" height="40" src="./images/fal-works-logo.png" alt="FAL Works">
         </a>
       </div>
     </div>
 
-    <div class="under-title"></div>
-
     <div class="main-content">
       <div id="ImageGridResult" style="position: relative"></div>
     </div>
+
     <p class="footer"><a class="license" href="./license">MIT License</a></p>
   </div>
 </body>
