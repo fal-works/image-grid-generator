@@ -109,7 +109,12 @@ textarea:focus {
     text-align: right;
 }
 
-a {
+a.title {
+    color: #202020;
+    text-decoration: none;
+}
+
+a.license {
     color: #808080;
 }
 
