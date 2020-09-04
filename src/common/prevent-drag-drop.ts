@@ -1,14 +1,14 @@
-export const preventDragDrop = () => {
+export const preventDragDrop = (): void => {
   window.addEventListener(
     "dragover",
-    event => {
+    (event) => {
       event.preventDefault();
     },
     false
   );
   window.addEventListener(
     "drop",
-    event => {
+    (event) => {
       event.preventDefault();
       event.stopPropagation();
     },

@@ -24,7 +24,7 @@ export const create = (parameters: {
     size,
     columns,
     cellSize: { width: cellWidth, height: cellWidth },
-    elements: []
+    elements: [],
   };
 };
 
@@ -39,12 +39,12 @@ const setElement = (
   const column = index % columns;
   const boxPosition = {
     x: areaPosition.x + cellSize.width * column,
-    y: areaPosition.y + cellSize.height * row
+    y: areaPosition.y + cellSize.height * row,
   };
   DomUtility.setInBox(element, boxPosition, cellSize);
 };
 
-export const changeColumns = (area: Unit, columns: number) => {
+export const changeColumns = (area: Unit, columns: number): void => {
   const { position: areaPosition, size, elements } = area;
   area.columns = columns;
 
@@ -72,7 +72,7 @@ export const add = (
   area: Unit,
   file: p5.File,
   onComplete: (img: p5.Element, file: p5.File) => void
-) => {
+): void => {
   if (file.type !== "image") {
     console.warn(`Dropped file that is not an image:`, file);
     return;
@@ -84,6 +84,6 @@ export const add = (
     onLoad: (img, file) => {
       onLoad(area, img);
       onComplete(img, file);
-    }
+    },
   }).hide();
 };

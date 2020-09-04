@@ -89,7 +89,7 @@ const startGenerate = () => {
     hide: true,
     warnOnFail: true,
     onSuccess: completeGenerate(parameters),
-    onEnd: endProcessing
+    onEnd: endProcessing,
   });
 };
 
@@ -105,7 +105,7 @@ const setupDropZone = () => {
   const thumbnails = ThumbnailArea.create({
     position: Settings.thumbnailAreaPosition,
     size: Settings.thumbnailAreaSize,
-    initialColumns: 4
+    initialColumns: 4,
   });
 
   const onAddThumbnail = (img: p5.Element, file: p5.File) => {
@@ -118,7 +118,7 @@ const setupDropZone = () => {
   DropZone.create({
     position: Settings.dropZonePosition,
     size: Settings.dropZoneSize,
-    onDrop
+    onDrop,
   });
 };
 
@@ -128,7 +128,7 @@ const setupButtons = () => {
     onClick: startGenerate,
     position: Settings.generateButtonPosition,
     size: Settings.generateButtonSize,
-    cursor: "pointer"
+    cursor: "pointer",
   });
 
   saveButton = Button.create({
@@ -136,22 +136,22 @@ const setupButtons = () => {
     onClick: saveResult,
     position: Settings.saveButtonPosition,
     size: Settings.saveButtonSize,
-    cursor: "pointer"
+    cursor: "pointer",
   });
 };
 
 const setupParameterArea = () => {
   parameterArea = ParameterArea.create({
-    onMouseEnter: area => {
+    onMouseEnter: (area) => {
       Guide.draw(area.parameters);
     },
     onMouseLeave: () => {
       drawGeneratedGrid();
     },
-    onChange: area => {
+    onChange: (area) => {
       drawGeneratedGrid();
       Guide.draw(area.parameters);
-    }
+    },
   });
 };
 
@@ -191,7 +191,7 @@ const setup = () => {
   Guide.draw(Parameters.defaultValues);
 };
 
-new p5(p5Instance => {
+new p5((p5Instance) => {
   setP5Instance(p5Instance);
   p.setup = setup;
 }, document.getElementById("ImageGridResult") || document.body);

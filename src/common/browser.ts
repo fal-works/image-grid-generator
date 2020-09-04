@@ -5,10 +5,10 @@ export enum Type {
   Safari,
   FireFox,
   Opera,
-  Other
+  Other,
 }
 
-export const determine = () => {
+export const determine = (): Type => {
   const userAgent = window.navigator.userAgent.toLowerCase();
 
   if (userAgent.indexOf("msie") !== -1 || userAgent.indexOf("trident") !== -1)

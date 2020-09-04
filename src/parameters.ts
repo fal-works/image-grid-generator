@@ -27,17 +27,18 @@ export const defaultValues: Unit = {
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
   },
   innerMargin: 0,
   backgroundColorCode: "#FFFFFF00",
-  fileName: "image-grid.png"
+  fileName: "image-grid.png",
 };
 
-export const toJsonString = (parameters: Unit) =>
+export const toJsonString = (parameters: Unit): string =>
   JSON.stringify(parameters, undefined, 2);
 
-export const toYamlString = (parameters: Unit) => yamlStringify(parameters);
+export const toYamlString = (parameters: Unit): string =>
+  yamlStringify(parameters);
 
 export const defaultString = toYamlString(defaultValues);
 
@@ -95,7 +96,7 @@ const validateOuterMargin = (parsed: any): OuterMargin => {
       top: margin,
       bottom: margin,
       left: margin,
-      right: margin
+      right: margin,
     };
   }
 
@@ -103,7 +104,7 @@ const validateOuterMargin = (parsed: any): OuterMargin => {
     top: validateNumber(parsed.top, defaultMargin.top),
     bottom: validateNumber(parsed.bottom, defaultMargin.bottom),
     left: validateNumber(parsed.left, defaultMargin.left),
-    right: validateNumber(parsed.right, defaultMargin.right)
+    right: validateNumber(parsed.right, defaultMargin.right),
   };
 };
 
@@ -135,7 +136,7 @@ const validate = (parsed: any): Unit => {
     outerMargin,
     innerMargin,
     backgroundColorCode,
-    fileName
+    fileName,
   };
 };
 
@@ -152,6 +153,7 @@ export const parse = (parametersText: string): Unit => {
   }
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const calculate = (parameters: Unit) => {
   const { width, height, columns, rows, outerMargin, innerMargin } = parameters;
 
@@ -180,6 +182,6 @@ export const calculate = (parameters: Unit) => {
     columnWidth,
     rowHeight,
     cellWidth,
-    cellHeight
+    cellHeight,
   };
 };

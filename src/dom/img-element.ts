@@ -8,11 +8,11 @@ export const create = (parameters: {
   onLoad?: (img: p5.Element, file: p5.File) => void;
   onFail?: (file: p5.File) => void;
   warnOnFail?: boolean;
-}) => {
+}): p5.Element => {
   const {
     file: { data: url },
     alt,
-    hide
+    hide,
   } = parameters;
 
   const img = p.createImg(url, alt, () => {
@@ -56,7 +56,7 @@ const defaultListParameters: ListParameters = {
   warnOnFail: true,
   onSuccess: returnVoid,
   onFailAny: returnVoid,
-  onEnd: returnVoid
+  onEnd: returnVoid,
 };
 
 /**
@@ -68,7 +68,7 @@ const defaultListParameters: ListParameters = {
 export const createList = (
   files: readonly p5.File[],
   parameters: Partial<ListParameters>
-) => {
+): p5.Element[] | undefined => {
   if (files.length <= 0) {
     if (parameters.onEnd) parameters.onEnd(files);
     return undefined;
@@ -86,7 +86,7 @@ export const createList = (
     onFailEach,
     warnOnFail,
     onSuccess,
-    onEnd
+    onEnd,
   } = parameterValues;
   let onFailAny = parameterValues.onFailAny;
   const fileCount = files.length;
@@ -107,14 +107,14 @@ export const createList = (
         processedCount += 1;
         if (processedCount === fileCount) onEnd(files);
       },
-      onFail: file => {
+      onFail: (file) => {
         onFailEach(file, i);
         onFailAny(files);
         onFailAny = returnVoid;
         processedCount += 1;
         if (processedCount === fileCount) onEnd(files);
       },
-      warnOnFail
+      warnOnFail,
     });
   }
 

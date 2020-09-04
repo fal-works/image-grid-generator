@@ -9,7 +9,7 @@ export interface Unit {
   readonly element: p5.Element;
   contentText: string;
   parameters: Parameters.Unit;
-  monitorIntervalId?: NodeJS.Timeout;
+  monitorIntervalId?: number;
 }
 
 type Listeners = {
@@ -22,7 +22,7 @@ const returnVoid = () => {};
 const defaultListeners: Listeners = {
   onChange: returnVoid,
   onMouseEnter: returnVoid,
-  onMouseLeave: returnVoid
+  onMouseLeave: returnVoid,
 };
 
 export const create = (listeners: {
@@ -38,14 +38,14 @@ export const create = (listeners: {
   const element = TextArea.create({
     position: Settings.parameterAreaPosition,
     size: Settings.parameterAreaSize,
-    initialValue: Parameters.defaultString
+    initialValue: Parameters.defaultString,
   });
 
   const area: Unit = {
     element,
     contentText: Parameters.defaultString,
     parameters: Parameters.defaultValues,
-    monitorIntervalId: undefined
+    monitorIntervalId: undefined,
   };
 
   const monitorChange = () => {
@@ -113,7 +113,7 @@ export const create = (listeners: {
     },
     position: Settings.resetParametersButtonPositon,
     size: Settings.resetParametersButtonSize,
-    cursor: "pointer"
+    cursor: "pointer",
   });
   resetButton.style("font-size", "medium");
 

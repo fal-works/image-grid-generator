@@ -7,7 +7,7 @@ export const create = (parameters: {
   position: Position;
   size: RectangleSize;
   onDrop: (file: p5.File) => void;
-}) => {
+}): p5.Element => {
   const { position, size, onDrop } = parameters;
 
   const dropZone = p.createDiv("Drop image files here");

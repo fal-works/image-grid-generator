@@ -1,5 +1,6 @@
 import { p } from "../common/shared";
 import { setPosition } from "./utility";
+import p5 from "p5";
 
 export const create = (parameters: {
   label: string;
@@ -7,7 +8,7 @@ export const create = (parameters: {
   position: { x: number; y: number };
   size: { width: number; height: number };
   cursor?: string;
-}) => {
+}): p5.Element => {
   const { label, onClick, position, size, cursor } = parameters;
 
   const button = p.createButton(label);

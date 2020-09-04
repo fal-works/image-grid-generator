@@ -2,7 +2,7 @@ import { p } from "../common/shared";
 import * as Parameters from "../parameters";
 import { getScaleFactorToShrink } from "../common/fit-to-box";
 
-export const draw = (parameters: Parameters.Unit) => {
+export const draw = (parameters: Parameters.Unit): void => {
   const { width, height, columns, rows, innerMargin } = parameters;
 
   const {
@@ -15,7 +15,7 @@ export const draw = (parameters: Parameters.Unit) => {
     columnWidth,
     rowHeight,
     cellWidth,
-    cellHeight
+    cellHeight,
   } = Parameters.calculate(parameters);
 
   p.push();

@@ -7,7 +7,7 @@ import * as Parameters from "./parameters";
 export const create = (
   images: readonly p5.Image[] | readonly p5.Element[],
   parameters: Parameters.Unit
-) => {
+): p5.Graphics => {
   const {
     width: graphicsWidth,
     height: graphicsHeight,
@@ -15,7 +15,7 @@ export const create = (
     columns,
     outerMargin,
     innerMargin,
-    backgroundColorCode
+    backgroundColorCode,
   } = parameters;
   const imageCount = images.length;
 
@@ -49,7 +49,7 @@ export const create = (
       const image = images[imageIndex++];
       const displaySize = fitToBox((image as any) as RectangleSize, {
         width: cellWidth,
-        height: cellHeight
+        height: cellHeight,
       });
       graphics.image(image, x, y, displaySize.width, displaySize.height);
     }

@@ -1,27 +1,27 @@
 {
   "name": "image-grid-generator",
   "description": "Combines multiple image files into one.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "author": "FAL",
   "dependencies": {
-    "js-yaml": "^3.13.1",
-    "p5": "^0.10.2"
+    "js-yaml": "^3.14.0",
+    "p5": "^1.1.9"
   },
   "devDependencies": {
-    "@types/js-yaml": "^3.12.1",
-    "@types/p5": "^0.9.0",
-    "@typescript-eslint/eslint-plugin": "^2.9.0",
-    "@typescript-eslint/parser": "^2.9.0",
-    "eslint": "^6.7.2",
-    "eslint-config-prettier": "^6.7.0",
-    "eslint-plugin-prettier": "^3.1.1",
+    "@types/js-yaml": "^3.12.5",
+    "@types/p5": "^0.9.1",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "@typescript-eslint/parser": "^4.0.1",
+    "eslint": "^7.8.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "npm-run-all": "^4.1.5",
-    "prettier": "^1.19.1",
-    "rollup": "^1.27.6",
+    "prettier": "^2.1.1",
+    "rollup": "^2.26.9",
     "rollup-plugin-cleanup": "^3.1.1",
-    "rollup-plugin-typescript2": "^0.25.2",
-    "terser": "^4.4.0",
-    "typescript": "^3.7.2"
+    "rollup-plugin-typescript2": "^0.27.2",
+    "terser": "^5.3.0",
+    "typescript": "^4.0.2"
   },
   "eslintIgnore": [
     "*.min.js"
