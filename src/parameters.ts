@@ -7,7 +7,15 @@ type OuterMargin = {
   readonly right: number;
 };
 
+type Shadow = {
+  readonly color: string;
+  readonly blur: number;
+  readonly offsetX: number;
+  readonly offsetY: number;
+};
+
 export type Unit = {
+  readonly fileName: string;
   readonly width: number;
   readonly height: number;
   readonly columns: number;
@@ -15,10 +23,11 @@ export type Unit = {
   readonly outerMargin: OuterMargin;
   readonly innerMargin: number;
   readonly backgroundColorCode: string;
-  readonly fileName: string;
+  readonly shadow: Shadow;
 };
 
 export const defaultValues: Unit = {
+  fileName: "image-grid.png",
   width: 800,
   height: 800,
   columns: 2,
@@ -31,7 +40,12 @@ export const defaultValues: Unit = {
   },
   innerMargin: 0,
   backgroundColorCode: "#FFFFFF00",
-  fileName: "image-grid.png",
+  shadow: {
+    color: "rgba(0, 0, 0, 0)",
+    blur: 0,
+    offsetX: 0,
+    offsetY: 0,
+  },
 };
 
 export const toJsonString = (parameters: Unit): string =>
@@ -108,7 +122,20 @@ const validateOuterMargin = (parsed: any): OuterMargin => {
   };
 };
 
+const validateShadow = (parsed: any): Shadow => {
+  const defaultShadow = defaultValues.shadow;
+
+  return {
+    color: validateString(parsed.color, defaultShadow.color),
+    blur: validateNumber(parsed.blur, defaultShadow.blur),
+    offsetX: validateNumber(parsed.offsetX, defaultShadow.offsetX),
+    offsetY: validateNumber(parsed.offsetY, defaultShadow.offsetY),
+  };
+};
+
 const validate = (parsed: any): Unit => {
+  const fileName = validateString(parsed.fileName, defaultValues.fileName, 255);
+
   const width = validateNumber(parsed.width, defaultValues.width, 1);
   const height = validateNumber(parsed.height, defaultValues.height, 1);
   const columns = validateNumber(parsed.columns, defaultValues.columns, 1);
@@ -126,9 +153,10 @@ const validate = (parsed: any): Unit => {
     defaultValues.backgroundColorCode
   );
 
-  const fileName = validateString(parsed.fileName, defaultValues.fileName, 255);
+  const shadow = validateShadow(parsed.shadow);
 
   return {
+    fileName,
     width,
     height,
     columns,
@@ -136,7 +164,7 @@ const validate = (parsed: any): Unit => {
     outerMargin,
     innerMargin,
     backgroundColorCode,
-    fileName,
+    shadow,
   };
 };
 

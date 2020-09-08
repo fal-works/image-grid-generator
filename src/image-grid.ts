@@ -16,6 +16,7 @@ export const create = (
     outerMargin,
     innerMargin,
     backgroundColorCode,
+    shadow,
   } = parameters;
   const imageCount = images.length;
 
@@ -51,7 +52,14 @@ export const create = (
         width: cellWidth,
         height: cellHeight,
       });
+      graphics.push();
+      const ctx = (graphics as any).drawingContext;
+      ctx.shadowColor = shadow.color;
+      ctx.shadowBlur = shadow.blur;
+      ctx.shadowOffsetX = shadow.offsetX;
+      ctx.shadowOffsetY = shadow.offsetY;
       graphics.image(image, x, y, displaySize.width, displaySize.height);
+      graphics.pop();
     }
   }
 
